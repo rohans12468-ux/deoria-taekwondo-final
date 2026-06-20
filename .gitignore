@@ -1,0 +1,7 @@
+# Never commit your real secret keys
+.env
+.env.local
+
+# Editor/OS junk files
+.DS_Store
+node_modules/

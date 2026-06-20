@@ -1,0 +1,489 @@
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery | Deoria Taekwondo Academy</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#0b0f19;
+    color:white;
+    overflow-x:hidden;
+}
+
+:root{
+    --primary:#111827;
+    --secondary:#dc2626;
+    --gold:#fbbf24;
+    --dark:#030712;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    width:100%;
+    background:#030712;
+    padding:20px 8%;
+    position:sticky;
+    top:0;
+    z-index:999;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo img{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.logo h2{
+    font-size:22px;
+}
+
+.back-btn{
+    text-decoration:none;
+    color:white;
+    background:var(--secondary);
+    padding:12px 24px;
+    border-radius:50px;
+    transition:0.3s;
+    font-weight:600;
+}
+
+.back-btn:hover{
+    background:#ef4444;
+    transform:translateY(-3px);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.gallery-hero{
+    padding:120px 8% 80px;
+    text-align:center;
+    background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+    url('https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=1600&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
+}
+
+.gallery-hero h1{
+    font-size:72px;
+    margin-bottom:20px;
+}
+
+.gallery-hero span{
+    color:var(--gold);
+}
+
+.gallery-hero p{
+    max-width:800px;
+    margin:auto;
+    color:#d1d5db;
+    line-height:1.8;
+    font-size:18px;
+}
+
+/* =========================
+   GALLERY GRID
+========================= */
+
+.gallery-section{
+    padding:100px 8%;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
+
+.gallery-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:24px;
+    cursor:pointer;
+    background:#111827;
+}
+
+.gallery-card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+    transition:0.5s;
+    display:block;
+}
+
+.gallery-card:hover img{
+    transform:scale(1.08);
+}
+
+.gallery-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    display:flex;
+    align-items:flex-end;
+    padding:25px;
+    opacity:0;
+    transition:0.4s;
+}
+
+.gallery-card:hover .gallery-overlay{
+    opacity:1;
+}
+
+.gallery-overlay h3{
+    font-size:22px;
+}
+
+/* =========================
+   POPUP MODAL
+========================= */
+
+.popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.9);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    padding:30px;
+}
+
+.popup img{
+    max-width:90%;
+    max-height:90vh;
+    border-radius:20px;
+}
+
+.popup.active{
+    display:flex;
+}
+
+.close-btn{
+    position:absolute;
+    top:30px;
+    right:40px;
+    font-size:40px;
+    color:white;
+    cursor:pointer;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#030712;
+    padding:40px 8%;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.08);
+}
+
+footer p{
+    color:#9ca3af;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .gallery-hero h1{
+        font-size:42px;
+    }
+
+    .gallery-hero p{
+        font-size:16px;
+    }
+
+    .gallery-card img{
+        height:260px;
+    }
+
+    .logo h2{
+        font-size:18px;
+    }
+
+    .back-btn{
+        padding:10px 18px;
+        font-size:14px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="navbar">
+
+<div class="logo">
+<img src="https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9.png">
+<h2>Deoria Taekwondo</h2>
+</div>
+
+<a href="index.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Back
+</a>
+
+</div>
+
+</header>
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="gallery-hero">
+
+<h1>Training <span>Gallery</span></h1>
+
+<p>
+Explore moments from training sessions, championships,
+medal ceremonies and academy activities.
+</p>
+
+</section>
+
+<!-- =========================
+     GALLERY
+========================= -->
+
+<section class="gallery-section">
+
+<div class="gallery-grid">
+
+<!-- IMAGE 1 -->
+<div class="gallery-card">
+<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
+<div class="gallery-overlay">
+<h3>Championship Training</h3>
+</div>
+</div>
+
+<!-- IMAGE 2 -->
+<div class="gallery-card">
+<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
+<div class="gallery-overlay">
+<h3>Kyorugi Practice</h3>
+</div>
+</div>
+
+<!-- IMAGE 3 -->
+<div class="gallery-card">
+<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
+<div class="gallery-overlay">
+<h3>Academy Moments</h3>
+</div>
+</div>
+
+<!-- IMAGE 4 -->
+<div class="gallery-card">
+<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
+<div class="gallery-overlay">
+<h3>Medal Ceremony</h3>
+</div>
+</div>
+
+<!-- IMAGE 5 -->
+<div class="gallery-card">
+<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
+<div class="gallery-overlay">
+<h3>Fitness Session</h3>
+</div>
+</div>
+
+<!-- IMAGE 6 -->
+<div class="gallery-card">
+<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
+<div class="gallery-overlay">
+<h3>Taekwondo Camp</h3>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     POPUP
+========================= -->
+
+<div class="popup" id="popup">
+
+<span class="close-btn" id="closeBtn">&times;</span>
+
+<img src="" id="popupImg">
+
+</div>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+<p>
+Deoria Taekwondo Academy © 2026
+</p>
+</footer>
+
+<script>
+
+const popup = document.getElementById('popup');
+const popupImg = document.getElementById('popupImg');
+const closeBtn = document.getElementById('closeBtn');
+
+const galleryImages = document.querySelectorAll('.gallery-card img');
+
+galleryImages.forEach((img)=>{
+
+    img.addEventListener('click', ()=>{
+
+        popup.classList.add('active');
+        popupImg.src = img.src;
+
+    });
+
+});
+
+closeBtn.addEventListener('click', ()=>{
+    popup.classList.remove('active');
+});
+
+popup.addEventListener('click', (e)=>{
+
+    if(e.target === popup){
+        popup.classList.remove('active');
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+
+<section class="gallery-section">
+
+<div class="gallery-grid" id="galleryGrid"></div>
+
+</section>
+
+
+# ADD THIS JAVASCRIPT BELOW YOUR CURRENT SCRIPT
+<script>
+
+const cloudName = "YOUR_CLOUD_NAME";
+const folderName = "Deoria-Taekwondo-Gallery";
+
+const imageList = [
+    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img1.jpeg",
+    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img2.jpeg",
+    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img3.jpeg",
+    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img4.jpeg",
+    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img5.jpeg",
+    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img6.jpeg",
+    "img7",
+    "img8"
+];
+
+const galleryGrid = document.getElementById('galleryGrid');
+
+imageList.forEach((imgName)=>{
+
+    const imageUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${folderName}/${imgName}.jpg`;
+
+    const card = document.createElement('div');
+    card.classList.add('gallery-card');
+
+    card.innerHTML = `
+        <img src="${imageUrl}" alt="Gallery Image">
+        <div class="gallery-overlay">
+            <h3>Deoria Taekwondo</h3>
+        </div>
+    `;
+
+    galleryGrid.appendChild(card);
+
+});
+
+const popup = document.getElementById('popup');
+const popupImg = document.getElementById('popupImg');
+const closeBtn = document.getElementById('closeBtn');
+
+setTimeout(()=>{
+
+    const galleryImages = document.querySelectorAll('.gallery-card img');
+
+    galleryImages.forEach((img)=>{
+
+        img.addEventListener('click', ()=>{
+
+            popup.classList.add('active');
+            popupImg.src = img.src;
+
+        });
+
+    });
+
+},500);
+
+closeBtn.addEventListener('click', ()=>{
+    popup.classList.remove('active');
+});
+
+popup.addEventListener('click', (e)=>{
+
+    if(e.target === popup){
+        popup.classList.remove('active');
+    }
+
+});
+
+</script>
+```
+

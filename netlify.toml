@@ -1,0 +1,13 @@
+# Netlify configuration
+# Tells Netlify: "the website files are in this folder, and the
+# backend functions (like our secure chat function) are here too."
+
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Makes sure direct calls to /.netlify/functions/* work correctly
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

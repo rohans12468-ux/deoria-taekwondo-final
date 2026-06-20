@@ -1,0 +1,35 @@
+// ════════════════════════════════════════════════════════════
+// firestore.rules
+// ════════════════════════════════════════════════════════════
+// Paste this into: Firebase Console -> Firestore Database -> Rules
+//
+// What this does:
+//  - "contacts" collection: visitors can SEND a message (create),
+//    but nobody from the public website can read, edit, or delete
+//    other people's messages. Only you, viewing inside the
+//    Firebase Console, can see them.
+//  - "news" collection: everybody can READ the news list (so it
+//    shows on the website), but only you (via the Firebase
+//    Console, logged in as the project owner) can add or change
+//    news items — the public website can't write to it.
+//
+// Without rules like these, by default Firestore can be left wide
+// open, letting anyone on the internet flood your database with
+// junk data or even delete things.
+// ════════════════════════════════════════════════════════════
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /contacts/{contactId} {
+      allow create: if true;   // anyone can submit the contact form
+      allow read, update, delete: if false; // nobody can read/edit/delete from the public site
+    }
+
+    match /news/{newsId} {
+      allow read: if true;     // anyone can see published news
+      allow write: if false;   // only editable from the Firebase Console (logged in as owner)
+    }
+  }
+}
