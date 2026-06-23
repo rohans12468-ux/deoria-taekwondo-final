@@ -66,12 +66,12 @@ document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el) =
    TIP: To add/remove/replace a photo, just edit the list below.
    "label" and "sub" are the two lines of text shown on hover. */
 const GALLERY_IMGS = [
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img1.jpeg', label: 'Sparring Session', sub: 'Kyorugi Training' },
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img3.jpeg', label: 'Forms Practice', sub: 'Poomsae Discipline' },
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img7.jpeg', label: 'Championship Ready', sub: 'Competition Prep' },
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img10.jpeg', label: 'Academy Training', sub: 'Daily Workout' },
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img16.jpeg', label: 'Team Practice', sub: 'Group Training' },
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img24.jpeg', label: 'Our Champions', sub: 'Deoria Academy' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/Priyankatkd.jpeg', label: 'Sparring Session', sub: 'Kyorugi Training' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/WhatsApp%20Image%202025-11-22%20at%2014.58.19_c498ec69.jpg', label: 'Forms Practice', sub: 'Poomsae Discipline' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/harsh%20tkd.PNG  ', label: 'Championship Ready', sub: 'Competition Prep' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/abhiskek%20tkd.jpeg', label: 'Academy Training', sub: 'Daily Workout' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/mithun%20tkd.jpeg', label: 'Team Practice', sub: 'Group Training' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/madhav.jpg', label: 'Our Champions', sub: 'Deoria Academy' },
 ];
 
 const totalSlides = GALLERY_IMGS.length;
