@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Videos | Deoria Taekwondo Academy</title>
+<meta name="description" content="Watch training sessions, competition highlights and academy videos from Deoria Taekwondo Academy."/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+:root{
+  --red:#c8102e;--red-glow:rgba(200,16,46,0.4);
+  --gold:#f0b429;--navy:#07091a;--navy2:#0c1028;--navy3:#111836;
+  --glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.09);
+  --text:#c8d4e8;--muted:#6b7fa3;--white:#f0f4ff;
+}
+body{font-family:'Poppins',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4;}
+
+/* HEADER */
+header{position:sticky;width:100%;top:0;left:0;z-index:998;background:rgba(7,9,26,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:16px 7%;}
+.logo{display:flex;align-items:center;gap:14px;text-decoration:none;}
+.logo img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid rgba(240,180,41,0.4);}
+.logo-text h2{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--white);}
+.logo-text p{font-size:10px;color:var(--gold);letter-spacing:2px;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:transparent;border:1px solid var(--gold);color:var(--gold);text-decoration:none;border-radius:4px;font-weight:600;font-size:13px;letter-spacing:.5px;transition:.3s;}
+.back-btn:hover{background:var(--gold);color:#000;}
+
+/* HERO */
+.videos-hero{padding:100px 7% 60px;text-align:center;position:relative;background:linear-gradient(135deg,var(--navy2),var(--navy));}
+.videos-hero .section-label{display:inline-flex;align-items:center;gap:8px;font-family:'Orbitron',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;padding:6px 14px;background:rgba(240,180,41,0.07);border:1px solid rgba(240,180,41,0.2);border-radius:99px;}
+.videos-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,8vw,88px);letter-spacing:3px;line-height:1;margin-bottom:16px;}
+.videos-hero h1 span{-webkit-text-stroke:2px var(--gold);color:transparent;}
+.videos-hero p{color:var(--muted);font-size:15px;max-width:560px;margin:0 auto 0;}
+.red-line{width:60px;height:3px;background:linear-gradient(90deg,var(--red),transparent);margin:16px auto 24px;}
+
+/* CATEGORY TABS */
+.video-tabs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:0 7% 50px;}
+.vtab{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:var(--glass);border:1px solid var(--glass-border);border-radius:99px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.3s;letter-spacing:.5px;}
+.vtab.active,.vtab:hover{background:rgba(200,16,46,0.12);border-color:var(--red);color:var(--white);}
+.vtab i{font-size:11px;}
+
+/* VIDEO GRID */
+.videos-section{padding:0 7% 100px;}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px;}
+
+.video-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;overflow:hidden;transition:.4s;position:relative;}
+.video-card:hover{border-color:rgba(200,16,46,0.35);transform:translateY(-8px);box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.video-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold));transform:scaleX(0);transition:.4s;transform-origin:left;}
+.video-card:hover::before{transform:scaleX(1);}
+
+/* YouTube embed wrapper — maintains 16:9 ratio */
+.yt-embed{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;background:#000;}
+.yt-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+
+.video-info{padding:18px 20px 20px;}
+.video-category{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.video-info h3{font-size:15px;font-weight:600;color:var(--white);line-height:1.45;margin-bottom:6px;}
+.video-info p{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:80px 20px;color:var(--muted);}
+.empty-state i{font-size:48px;color:var(--glass-border);margin-bottom:16px;display:block;}
+.empty-state h3{font-size:20px;color:var(--text);margin-bottom:8px;}
+
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:40px 7%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+footer p{font-size:13px;color:var(--muted);}
+footer span{color:var(--red);}
+
+@media(max-width:768px){
+  .video-grid{grid-template-columns:1fr;}
+  .navbar{padding:14px 5%;}
+  .videos-section{padding:0 5% 80px;}
+  .video-tabs{padding:0 5% 40px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+<div class="navbar">
+  <a href="index.html" class="logo">
+    <img src="https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9.png" alt="Logo">
+    <div class="logo-text">
+      <h2>Deoria Taekwondo</h2>
+      <p>Ravindra Kishor Shahi Sports Stadium</p>
+    </div>
+  </a>
+  <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+</div>
+</header>
+
+<!-- HERO -->
+<section class="videos-hero">
+  <div class="section-label"><i class="fab fa-youtube"></i> &nbsp; Video Gallery</div>
+  <h1>Our <span>Videos</span></h1>
+  <div class="red-line"></div>
+  <p>Training sessions, championship highlights, belt ceremonies and more — straight from the academy floor.</p>
+</section>
+
+<!-- CATEGORY TABS -->
+<div class="video-tabs">
+  <div class="vtab active" data-cat="all"><i class="fas fa-th"></i> All Videos</div>
+  <div class="vtab" data-cat="training"><i class="fas fa-fist-raised"></i> Training</div>
+  <div class="vtab" data-cat="competition"><i class="fas fa-trophy"></i> Competitions</div>
+  <div class="vtab" data-cat="ceremony"><i class="fas fa-medal"></i> Ceremonies</div>
+  <div class="vtab" data-cat="camp"><i class="fas fa-campground"></i> Camps</div>
+</div>
+
+<!-- VIDEO GRID -->
+<section class="videos-section">
+  <div class="video-grid" id="videoGrid">
+    <!-- Videos are rendered by JS below — just add/remove entries in the VIDEOS array -->
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Deoria Taekwondo Academy — Designed with ❤️</p>
+  <span>🥋 Train · Compete · Champion</span>
+</footer>
+
+<script>
+/*
+  ════════════════════════════════════════════════════════
+  HOW TO ADD A VIDEO:
+  1. Upload/find your video on YouTube.
+  2. Copy the 11-character video ID from the URL:
+     youtube.com/watch?v=  →  THIS_PART  ←
+  3. Add a new object to the VIDEOS array below.
+  4. Set "cat" to one of: training | competition | ceremony | camp
+  ════════════════════════════════════════════════════════
+*/
+const VIDEOS = [
+  {
+    id: 'dQw4w9WgXcQ',          // ← REPLACE with your real YouTube video ID
+    title: 'Kyorugi Sparring Session — Advanced Training',
+    desc:  'High-intensity sparring drill with footwork and counter-attack combinations.',
+    cat:   'training'
+  },
+  {
+    id: 'dQw4w9WgXcQ',          // ← REPLACE with your real YouTube video ID
+    title: 'District Championship 2024 — Highlight Reel',
+    desc:  'Best moments from our athletes competing at the district level.',
+    cat:   'competition'
+  },
+  {
+    id: 'dQw4w9WgXcQ',          // ← REPLACE with your real YouTube video ID
+    title: 'Belt Grading Ceremony — Junior Batch',
+    desc:  'Students receiving their new belts after months of dedicated training.',
+    cat:   'ceremony'
+  },
+  {
+    id: 'dQw4w9WgXcQ',          // ← REPLACE with your real YouTube video ID
+    title: 'Summer Training Camp 2024',
+    desc:  'Highlights from our intensive 10-day summer camp at the stadium.',
+    cat:   'camp'
+  },
+  {
+    id: 'dQw4w9WgXcQ',          // ← REPLACE with your real YouTube video ID
+    title: 'Poomsae Forms Practice — Taeguek Series',
+    desc:  'Athletes performing the Taeguek 1-8 patterns with precision and focus.',
+    cat:   'training'
+  },
+  {
+    id: 'dQw4w9WgXcQ',          // ← REPLACE with your real YouTube video ID
+    title: 'State Championship 2023 — Gold Medal Bout',
+    desc:  'Watch our student claim gold at the UP State Taekwondo Championship.',
+    cat:   'competition'
+  },
+];
+
+const CATEGORY_LABELS = {
+  training:    'Training',
+  competition: 'Competition',
+  ceremony:    'Ceremony',
+  camp:        'Camp'
+};
+
+let activeFilter = 'all';
+const grid = document.getElementById('videoGrid');
+
+function renderVideos() {
+  const filtered = activeFilter === 'all' ? VIDEOS : VIDEOS.filter(v => v.cat === activeFilter);
+  grid.innerHTML = '';
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <i class="fab fa-youtube"></i>
+        <h3>No videos in this category yet</h3>
+        <p>Check back soon — more content is on its way!</p>
+      </div>`;
+    return;
+  }
+
+  filtered.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <div class="yt-embed">
+        <iframe
+          src="https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1"
+          title="${v.title}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <div class="video-info">
+        <div class="video-category"><i class="fas fa-tag"></i> &nbsp;${CATEGORY_LABELS[v.cat] || v.cat}</div>
+        <h3>${v.title}</h3>
+        <p>${v.desc}</p>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// Tab switching
+document.querySelectorAll('.vtab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.vtab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeFilter = tab.dataset.cat;
+    renderVideos();
+  });
+});
+
+renderVideos();
+</script>
+</body>
+</html>

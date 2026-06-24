@@ -81,13 +81,27 @@ function renderLangSelect() {
       <div class="ls-opt" id="pickEnglish"><span class="lsflag">🇬🇧</span><span class="lsname">English</span><span class="lsdesc">Full English</span></div>
     </div>`;
   msgs.appendChild(screen);
-  document.getElementById('pickHinglish').onclick = () => startChat('hinglish');
-  document.getElementById('pickEnglish').onclick = () => startChat('english');
+ document.getElementById('pickHinglish').onclick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  startChat('hinglish');
+};
+
+document.getElementById('pickEnglish').onclick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  startChat('english');
+};
 }
 
 function startChat(lang) {
+ 
+  panel.classList.add('open');
+  panelOpen = true;
+
   cbLang = lang;
   cbHistory = [];
+  
   updateLangBtn();
   cbInput.disabled = false;
   cbSend.disabled = false;
