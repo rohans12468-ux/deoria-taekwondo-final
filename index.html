@@ -520,11 +520,22 @@ header.scrolled{background:rgba(7,9,26,0.95);}
 /* ═══ CONTACT ═══ */
 .contact{background:var(--navy2);}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+@media (max-width:768px){
+
 .contact-form{
-  background:var(--glass);border:1px solid var(--glass-border);
-  border-radius:16px;padding:44px;
+    padding:22px;
 }
+
 .social-card{
+    padding:16px;
+}
+
+.social-info h4{
+    font-size:18px;
+    word-break:break-word;
+}
+
+}card{
 display:flex;
 align-items:center;
 gap:20px;
@@ -885,6 +896,23 @@ footer{
   body {
     cursor: auto !important;
   }
+}
+/* Prevent 3D gallery from interfering with touch scrolling */
+.gallery-3d-wrap{
+    overflow:hidden;
+    touch-action: pan-y;
+}
+
+.gallery-3d-track{
+    touch-action: pan-y;
+}
+
+/* prevent overflow on mobile */
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
 }
 </style>
 </head>
