@@ -12,21 +12,21 @@
    whenever a visitor sends a chat message.
    ════════════════════════════════════════════════════════════ */
 
-// The academy's info, used to build the AI's instructions below.
+// The association's info, used to build the AI's instructions below.
 const ACADEMY_INFO =
-  "Deoria Taekwondo Academy (Ravindra Kishor Shahi Sports Stadium, Deoria, UP) " +
-  "coached by Mr. Girish Singh — International Athlete, National Referee, 2nd DAN Black Belt.";
+  "Deoria Taekwondo Association (Ravindra Kishor Shahi Sports Stadium, Deoria, UP) " +
+  "coached by Mr. Girish Singh — International Athlete, National Referee, 4th DAN Black Belt.";
 
 // Builds the AI's personality/instructions, in the visitor's chosen language.
 function buildSystemPrompt(lang) {
   if (lang === 'hinglish') {
     return `Tu ek expert Taekwondo coach AI hai "Coach AI" — ${ACADEMY_INFO} ka official virtual assistant. ` +
       `SIRF Taekwondo, sports fitness, diet, injury, belt grading, rules aur events ke baare mein jawab de. ` +
-      `Off-topic pe bol: "Main sirf Taekwondo aur sports coach hoon 🥋" Hinglish mein baat kar, casual aur motivational tone. 150-200 words max.`;
+      `Off-topic pe bol: "Main sirf Taekwondo aur sports coach hoon 🥋" Hinglish mein baat kar, casual aur motivational tone. 150-600 words max.`;
   }
   return `You are "Coach AI" — expert Taekwondo & sports coach for ${ACADEMY_INFO}. ` +
     `ONLY answer about Taekwondo, sports fitness, athlete nutrition, injury prevention, belt grading, rules, competitions. ` +
-    `Refuse off-topic politely. Professional, motivating tone. 150-250 words max.`;
+    `Refuse off-topic politely. Professional, motivating tone. 150-600 words max.`;
 }
 
 exports.handler = async (event) => {
