@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,235 +10,379 @@
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    background:#0b0f19;
-    color:white;
-    overflow-x:hidden;
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0b0f19;
+    color: white;
+    overflow-x: hidden;
 }
 
-:root{
-    --primary:#111827;
-    --secondary:#dc2626;
-    --gold:#fbbf24;
-    --dark:#030712;
+:root {
+    --primary: #111827;
+    --secondary: #dc2626;
+    --gold: #fbbf24;
+    --dark: #030712;
 }
 
-/* =========================
+/* =====================
    HEADER
-========================= */
+===================== */
 
-header{
-    width:100%;
-    background:#030712;
-    padding:20px 8%;
-    position:sticky;
-    top:0;
-    z-index:999;
-    border-bottom:1px solid rgba(255,255,255,0.08);
+header {
+    width: 100%;
+    background: #030712;
+    padding: 16px 8%;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
-.navbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.logo img{
-    width:55px;
-    height:55px;
-    border-radius:50%;
-    object-fit:cover;
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
-.logo h2{
-    font-size:22px;
+.logo h2 {
+    font-size: 20px;
+    font-weight: 700;
 }
 
-.back-btn{
-    text-decoration:none;
-    color:white;
-    background:var(--secondary);
-    padding:12px 24px;
-    border-radius:50px;
-    transition:0.3s;
-    font-weight:600;
+.back-btn {
+    text-decoration: none;
+    color: white;
+    background: var(--secondary);
+    padding: 10px 22px;
+    border-radius: 50px;
+    transition: 0.3s;
+    font-weight: 600;
+    font-size: 14px;
 }
 
-.back-btn:hover{
-    background:#ef4444;
-    transform:translateY(-3px);
+.back-btn:hover {
+    background: #ef4444;
+    transform: translateY(-2px);
 }
 
-/* =========================
+/* =====================
    HERO
-========================= */
+===================== */
 
-.gallery-hero{
-    padding:120px 8% 80px;
-    text-align:center;
-    background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
-    url('https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=1600&auto=format&fit=crop');
-    background-size:cover;
-    background-position:center;
+.gallery-hero {
+    padding: 100px 8% 70px;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.72)),
+        url('https://images.unsplash.com/photo-1517438322307-e67111335449?q=80&w=1600&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
 }
 
-.gallery-hero h1{
-    font-size:72px;
-    margin-bottom:20px;
+.gallery-hero h1 {
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 18px;
+    letter-spacing: -1px;
 }
 
-.gallery-hero span{
-    color:var(--gold);
+.gallery-hero span {
+    color: var(--gold);
 }
 
-.gallery-hero p{
-    max-width:800px;
-    margin:auto;
-    color:#d1d5db;
-    line-height:1.8;
-    font-size:18px;
+.gallery-hero p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: #d1d5db;
+    line-height: 1.8;
+    font-size: 17px;
 }
 
-/* =========================
+/* =====================
    GALLERY GRID
-========================= */
+===================== */
 
-.gallery-section{
-    padding:100px 8%;
+.gallery-section {
+    padding: 70px 5%;
 }
 
-.gallery-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:25px;
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
 }
 
-.gallery-card{
-    position:relative;
-    overflow:hidden;
-    border-radius:24px;
-    cursor:pointer;
-    background:#111827;
+.gallery-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    cursor: pointer;
+    background: #111827;
+    aspect-ratio: 1 / 1;
 }
 
-.gallery-card img{
-    width:100%;
-    height:320px;
-    object-fit:cover;
-    transition:0.5s;
-    display:block;
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
 }
 
-.gallery-card:hover img{
-    transform:scale(1.08);
+.gallery-card:hover img {
+    transform: scale(1.07);
 }
 
-.gallery-overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-    display:flex;
-    align-items:flex-end;
-    padding:25px;
-    opacity:0;
-    transition:0.4s;
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);
+    display: flex;
+    align-items: flex-end;
+    padding: 18px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
 }
 
-.gallery-card:hover .gallery-overlay{
-    opacity:1;
+.gallery-card:hover .gallery-overlay {
+    opacity: 1;
 }
 
-.gallery-overlay h3{
-    font-size:22px;
+.gallery-overlay h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
 }
 
-/* =========================
-   POPUP MODAL
-========================= */
+/* =====================
+   LIGHTBOX (POPUP)
+===================== */
 
-.popup{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.9);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-    padding:30px;
+.popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.96);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 16px;
+    /* Prevent body scroll when open */
+    touch-action: none;
 }
 
-.popup img{
-    max-width:90%;
-    max-height:90vh;
-    border-radius:20px;
+.popup.active {
+    display: flex;
 }
 
-.popup.active{
-    display:flex;
+.popup-inner {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.close-btn{
-    position:absolute;
-    top:30px;
-    right:40px;
-    font-size:40px;
-    color:white;
-    cursor:pointer;
+.popup img {
+    max-width: 100%;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    border-radius: 14px;
+    object-fit: contain;
+    display: block;
+    /* Prevent long-press save on mobile */
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
 }
 
-/* =========================
+.close-btn {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    font-size: 38px;
+    color: rgba(255,255,255,0.85);
+    cursor: pointer;
+    z-index: 10000;
+    line-height: 1;
+    transition: color 0.2s;
+    /* Larger tap target on mobile */
+    padding: 8px;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+/* Prev / Next arrows */
+.nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.12);
+    border: none;
+    color: white;
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 10000;
+    /* Larger tap zone */
+    touch-action: manipulation;
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+.nav-btn.prev { left: 14px; }
+.nav-btn.next { right: 14px; }
+
+/* Image counter */
+.img-counter {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #d1d5db;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 50px;
+    z-index: 10000;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* =====================
    FOOTER
-========================= */
+===================== */
 
-footer{
-    background:#030712;
-    padding:40px 8%;
-    text-align:center;
-    border-top:1px solid rgba(255,255,255,0.08);
+footer {
+    background: #030712;
+    padding: 36px 8%;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
 }
 
-footer p{
-    color:#9ca3af;
+footer p {
+    color: #9ca3af;
+    font-size: 14px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* =====================
+   RESPONSIVE — TABLET
+===================== */
 
-@media(max-width:768px){
-
-    .gallery-hero h1{
-        font-size:42px;
+@media (max-width: 900px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
     }
 
-    .gallery-hero p{
-        font-size:16px;
+    .gallery-hero h1 {
+        font-size: 46px;
+    }
+}
+
+/* =====================
+   RESPONSIVE — MOBILE
+===================== */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 14px 5%;
     }
 
-    .gallery-card img{
-        height:260px;
+    .logo img {
+        width: 42px;
+        height: 42px;
     }
 
-    .logo h2{
-        font-size:18px;
+    .logo h2 {
+        font-size: 16px;
     }
 
-    .back-btn{
-        padding:10px 18px;
-        font-size:14px;
+    .back-btn {
+        padding: 9px 16px;
+        font-size: 13px;
+    }
+
+    .gallery-hero {
+        padding: 70px 5% 50px;
+    }
+
+    .gallery-hero h1 {
+        font-size: 34px;
+        letter-spacing: -0.5px;
+    }
+
+    .gallery-hero p {
+        font-size: 14px;
+    }
+
+    .gallery-section {
+        padding: 40px 4%;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .gallery-card {
+        border-radius: 12px;
+    }
+
+    /* Always show overlay label on mobile */
+    .gallery-overlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    }
+
+    .gallery-overlay h3 {
+        font-size: 12px;
+    }
+
+    .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .nav-btn.prev { left: 8px; }
+    .nav-btn.next { right: 8px; }
+
+    .close-btn {
+        top: 12px;
+        right: 14px;
+        font-size: 32px;
     }
 
 }
@@ -253,237 +391,175 @@ footer p{
 </head>
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
-
+<!-- HEADER -->
 <header>
-
-<div class="navbar">
-
-<div class="logo">
-<img src="https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9.png">
-<h2>Deoria Taekwondo</h2>
-</div>
-
-<a href="index.html" class="back-btn">
-<i class="fas fa-arrow-left"></i> Back
-</a>
-
-</div>
-
+    <div class="navbar">
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9.png" alt="Logo">
+            <h2>Deoria Taekwondo</h2>
+        </div>
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+    </div>
 </header>
 
-<!-- =========================
-     HERO
-========================= -->
-
+<!-- HERO -->
 <section class="gallery-hero">
-
-<h1>Training <span>Gallery</span></h1>
-
-<p>
-Explore moments from training sessions, championships,
-medal ceremonies and academy activities.
-</p>
-
+    <h1>Training <span>Gallery</span></h1>
+    <p>Explore moments from training sessions, championships, medal ceremonies and academy activities.</p>
 </section>
 
-<!-- =========================
-     GALLERY
-========================= -->
-
+<!-- GALLERY -->
 <section class="gallery-section">
-
-<div class="gallery-grid">
-
-<!-- IMAGE 1 -->
-<div class="gallery-card">
-<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
-<div class="gallery-overlay">
-<h3>Championship Training</h3>
-</div>
-</div>
-
-<!-- IMAGE 2 -->
-<div class="gallery-card">
-<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
-<div class="gallery-overlay">
-<h3>Kyorugi Practice</h3>
-</div>
-</div>
-
-<!-- IMAGE 3 -->
-<div class="gallery-card">
-<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
-<div class="gallery-overlay">
-<h3>Academy Moments</h3>
-</div>
-</div>
-
-<!-- IMAGE 4 -->
-<div class="gallery-card">
-<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
-<div class="gallery-overlay">
-<h3>Medal Ceremony</h3>
-</div>
-</div>
-
-<!-- IMAGE 5 -->
-<div class="gallery-card">
-<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
-<div class="gallery-overlay">
-<h3>Fitness Session</h3>
-</div>
-</div>
-
-<!-- IMAGE 6 -->
-<div class="gallery-card">
-<img src="https://res.cloudinary.com/demo/image/upload/sample.jpg" alt="Gallery Image">
-<div class="gallery-overlay">
-<h3>Taekwondo Camp</h3>
-</div>
-</div>
-
-</div>
-
+    <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
-<!-- =========================
-     POPUP
-========================= -->
-
+<!-- LIGHTBOX -->
 <div class="popup" id="popup">
-
-<span class="close-btn" id="closeBtn">&times;</span>
-
-<img src="" id="popupImg">
-
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <button class="nav-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+    <div class="popup-inner">
+        <img src="" id="popupImg" alt="Gallery Image">
+    </div>
+    <button class="nav-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    <div class="img-counter" id="imgCounter">1 / 22</div>
 </div>
 
-<!-- =========================
-     FOOTER
-========================= -->
-
+<!-- FOOTER -->
 <footer>
-<p>
-Deoria Taekwondo Academy © 2026
-</p>
+    <p>Deoria Taekwondo Academy © 2026</p>
 </footer>
 
 <script>
 
-const popup = document.getElementById('popup');
-const popupImg = document.getElementById('popupImg');
-const closeBtn = document.getElementById('closeBtn');
-
-const galleryImages = document.querySelectorAll('.gallery-card img');
-
-galleryImages.forEach((img)=>{
-
-    img.addEventListener('click', ()=>{
-
-        popup.classList.add('active');
-        popupImg.src = img.src;
-
-    });
-
-});
-
-closeBtn.addEventListener('click', ()=>{
-    popup.classList.remove('active');
-});
-
-popup.addEventListener('click', (e)=>{
-
-    if(e.target === popup){
-        popup.classList.remove('active');
-    }
-
-});
-
-</script>
-
-</body>
-</html>
-
-<section class="gallery-section">
-
-<div class="gallery-grid" id="galleryGrid"></div>
-
-</section>
-
-
-# ADD THIS JAVASCRIPT BELOW YOUR CURRENT SCRIPT
-<script>
-
-const cloudName = "YOUR_CLOUD_NAME";
-const folderName = "Deoria-Taekwondo-Gallery";
-
+/* =====================
+   IMAGE LIST — 22 photos
+===================== */
 const imageList = [
-    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img1.jpeg",
-    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img2.jpeg",
-    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img3.jpeg",
-    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img4.jpeg",
-    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img5.jpeg",
-    "https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/img6.jpeg",
-    "img7",
-    "img8"
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461410/015_nt9izn.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461358/011_sknfhp.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461319/010_ubs2lf.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461281/09_qutknt.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461241/08_lcvyvl.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461204/07_i7d7ei.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461168/06_hgcxyn.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461130/05_awoz0c.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461091/04_vwyuut.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461047/03_h4xn8c.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461004/02_ulhqb1.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782460966/01_sbfzjf.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782460741/dm2_wkrogo.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782460705/dm_i5luso.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459605/prize2_oavxgv.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459559/prize1_zdhtdp.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459516/hall2_vr5kls.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459436/hall1_afrgh6.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782457411/18_vqgyru.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782457548/WhatsApp_Image_2026-06-15_at_7.01.04_ikewn8.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782458056/abhishek_sedzrp.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782457855/WhatsApp_Image_2026-06-26_at_12.38.58_PM_hmxxew.jpg"
 ];
 
+/* =====================
+   BUILD GRID
+===================== */
 const galleryGrid = document.getElementById('galleryGrid');
 
-imageList.forEach((imgName)=>{
-
-    const imageUrl = `https://res.cloudinary.com/${cloudName}/image/upload/${folderName}/${imgName}.jpg`;
-
+imageList.forEach((url, index) => {
     const card = document.createElement('div');
     card.classList.add('gallery-card');
+    card.dataset.index = index;
 
     card.innerHTML = `
-        <img src="${imageUrl}" alt="Gallery Image">
+        <img src="${url}" alt="Gallery Image ${index + 1}" loading="lazy">
         <div class="gallery-overlay">
             <h3>Deoria Taekwondo</h3>
         </div>
     `;
 
     galleryGrid.appendChild(card);
-
 });
 
-const popup = document.getElementById('popup');
-const popupImg = document.getElementById('popupImg');
-const closeBtn = document.getElementById('closeBtn');
+/* =====================
+   LIGHTBOX LOGIC
+===================== */
+const popup     = document.getElementById('popup');
+const popupImg  = document.getElementById('popupImg');
+const closeBtn  = document.getElementById('closeBtn');
+const prevBtn   = document.getElementById('prevBtn');
+const nextBtn   = document.getElementById('nextBtn');
+const counter   = document.getElementById('imgCounter');
 
-setTimeout(()=>{
+let currentIndex = 0;
 
-    const galleryImages = document.querySelectorAll('.gallery-card img');
+function openPopup(index) {
+    currentIndex = index;
+    popupImg.src = imageList[currentIndex];
+    counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
-    galleryImages.forEach((img)=>{
-
-        img.addEventListener('click', ()=>{
-
-            popup.classList.add('active');
-            popupImg.src = img.src;
-
-        });
-
-    });
-
-},500);
-
-closeBtn.addEventListener('click', ()=>{
+function closePopup() {
     popup.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function showNext() {
+    currentIndex = (currentIndex + 1) % imageList.length;
+    popupImg.src = imageList[currentIndex];
+    counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
+}
+
+function showPrev() {
+    currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+    popupImg.src = imageList[currentIndex];
+    counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
+}
+
+/* Card click — open lightbox */
+galleryGrid.addEventListener('click', (e) => {
+    const card = e.target.closest('.gallery-card');
+    if (card) openPopup(parseInt(card.dataset.index));
 });
 
-popup.addEventListener('click', (e)=>{
+closeBtn.addEventListener('click', closePopup);
+nextBtn.addEventListener('click', showNext);
+prevBtn.addEventListener('click', showPrev);
 
-    if(e.target === popup){
-        popup.classList.remove('active');
+/* Click backdrop to close */
+popup.addEventListener('click', (e) => {
+    if (e.target === popup) closePopup();
+});
+
+/* Keyboard navigation */
+document.addEventListener('keydown', (e) => {
+    if (!popup.classList.contains('active')) return;
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft')  showPrev();
+    if (e.key === 'Escape')     closePopup();
+});
+
+/* =====================
+   SWIPE SUPPORT (mobile)
+===================== */
+let touchStartX = 0;
+let touchEndX   = 0;
+
+popup.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+popup.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) showNext();
+        else showPrev();
     }
-
-});
+}, { passive: true });
 
 </script>
-```
-
+</body>
+</html>
