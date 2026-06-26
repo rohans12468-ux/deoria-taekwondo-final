@@ -29,6 +29,48 @@ function buildSystemPrompt(lang) {
     `Refuse off-topic politely. Professional, motivating tone. 150-600 words max.`;
 }
 
+
+async function askGroq(lang, history) {
+
+  const messages = [
+    {
+      role: "system",
+      content: buildSystemPrompt(lang)
+    }
+  ];
+
+  history.forEach(item => {
+    messages.push({
+      role: item.role === "model" ? "assistant" : item.role,
+      content: item.parts[0].text
+    });
+  });
+
+  const response = await fetch(
+    "https://api.groq.com/openai/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "llama-3.3-70b-versatile",
+        messages,
+        temperature: 0.75,
+        max_tokens: 600
+      })
+    }
+  );
+
+  if (!response.ok)
+    throw new Error("Groq failed");
+
+  const data = await response.json();
+
+  return data.choices[0].message.content;
+}
+
 exports.handler = async (event) => {
   // Only allow POST requests (visitor sending a chat message)
   if (event.httpMethod !== 'POST') {
@@ -36,10 +78,17 @@ exports.handler = async (event) => {
   }
 
   // The secret key lives ONLY here, set in Netlify's dashboard environment variables.
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'Server is missing GEMINI_API_KEY. See README.md.' }) };
-  }
+  const geminiKey = process.env.GEMINI_API_KEY;
+const groqKey = process.env.GROQ_API_KEY;
+
+if (!geminiKey && !groqKey) {
+  return {
+    statusCode: 500,
+    body: JSON.stringify({
+      error: "No AI API keys configured."
+    })
+  };
+}
 
   try {
     const { lang, history } = JSON.parse(event.body || '{}');
@@ -53,7 +102,7 @@ exports.handler = async (event) => {
     }
 
     const safeLang = lang === 'hinglish' ? 'hinglish' : 'english';
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
 
     const response = await fetch(geminiUrl, {
       method: 'POST',
@@ -66,18 +115,59 @@ exports.handler = async (event) => {
     });
 
     if (!response.ok) {
-      const errData = await response.json().catch(() => ({}));
-      return { statusCode: 502, body: JSON.stringify({ error: errData?.error?.message || 'AI service error' }) };
+
+    console.log("Gemini failed");
+
+    try {
+
+        const groqReply =
+            await askGroq(safeLang, history);
+
+        return {
+            statusCode:200,
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                reply:groqReply
+            })
+        };
+
+    }
+    catch{
+
+        const errData =
+        await response.json().catch(()=>({}));
+
+        return {
+            statusCode:502,
+            body:JSON.stringify({
+                error:
+                errData?.error?.message
+                ||
+                "Both Gemini and Groq failed."
+            })
+        };
+
     }
 
-    const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate a reply. Please try again.";
+}
+   const data = await response.json();
 
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ reply })
-    };
+const reply =
+data.candidates?.[0]?.content?.parts?.[0]?.text
+||
+"Sorry, I couldn't generate a reply.";
+
+return {
+  statusCode: 200,
+  headers: {
+    "Content-Type":"application/json"
+  },
+  body: JSON.stringify({
+    reply
+  })
+};
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: 'Unexpected server error.' }) };
   }
