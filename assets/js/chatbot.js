@@ -108,8 +108,8 @@ function startChat(lang) {
   cbInput.focus();
   msgs.innerHTML = '';
   const welcome = lang === 'hinglish'
-    ? `<strong>Kem Cho Champion!</strong> 🥋 Main hoon <strong>Coach AI</strong> — Deoria Taekwondo Academy ka virtual coach!<br><br>Taekwondo, diet, fitness, injuries, competitions — koi bhi sports sawaal poocho. <em>Let's train! 💪</em>`
-    : `<strong>Welcome, Champion!</strong> 🥋 I'm <strong>Coach AI</strong> — virtual coach of Deoria Taekwondo Academy.<br><br>Ask me anything about Taekwondo, diet, fitness, injuries, competitions. <em>Let's train! 💪</em>`;
+    ? `<strong>Kem Cho Champion!</strong> 🥋 Main hoon <strong>Coach AI</strong> — Deoria Taekwondo Association ka virtual coach!<br><br>Taekwondo, diet, fitness, injuries, competitions — koi bhi sports sawaal poocho. <em>Let's train! 💪</em>`
+    : `<strong>Welcome, Champion!</strong> 🥋 I'm <strong>Coach AI</strong> — virtual coach of Deoria Taekwondo Association.<br><br>Ask me anything about Taekwondo, diet, fitness, injuries, competitions. <em>Let's train! 💪</em>`;
   appendBotMsg(welcome);
   renderChips();
 }

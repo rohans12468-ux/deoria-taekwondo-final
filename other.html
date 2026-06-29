@@ -413,13 +413,13 @@ footer p {
 }
 
 .gallery-btn:hover{
-    background:#100f0f;
+    background:#dc2626;
     transform:translateY(-3px);
     box-shadow:0 8px 20px rgba(220,38,38,0.35);
 }
 
 .gallery-btn.active{
-    background:#0e0e0e;
+    background:#dc2626;
     color:#fff;
     box-shadow:0 8px 20px rgba(220,38,38,0.35);
 }
@@ -503,7 +503,7 @@ footer p {
             <img src="https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9.png" alt="Logo">
             <h2>Deoria Taekwondo</h2>
         </div>
-        <a href="index.html" class="back-btn">
+        <a href="gallery.html" class="back-btn">
             <i class="fas fa-arrow-left"></i> Back
         </a>
     </div>
@@ -516,16 +516,13 @@ footer p {
 </section>
 
 <!-- Gallery Category Buttons -->
-<div class="gallery-buttons">
-    <a href="poomsae.html" class="gallery-btn active">Poomsae Event photos</a>
-    <a href="other.html" class="gallery-btn">Other Photos</a>
-</div>
+
 
 <!-- GALLERY -->
 <section class="gallery-section">
     <div class="gallery-grid" id="galleryGrid"></div>
 </section>
- 
+
 <!-- LIGHTBOX -->
 <div class="popup" id="popup">
     <span class="close-btn" id="closeBtn">&times;</span>
@@ -557,32 +554,26 @@ footer p {
    IMAGE LIST — 22 photos
 ===================== */
 const imageList = [
+     "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782673546/WhatsApp_Image_2026-06-26_at_3.13.26_PM_ztytod.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782673546/WhatsApp_Image_2026-06-26_at_3.13.26_PM_1_dgm8jk.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782673546/WhatsApp_Image_2026-06-26_at_3.13.26_PM_2_fh28bx.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782673546/WhatsApp_Image_2026-06-26_at_3.13.26_PM_3_jofsgk.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674430/WhatsApp_Image_2026-06-29_at_12.49.13_AM_12_nlcag5.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674430/WhatsApp_Image_2026-06-29_at_12.49.13_AM_13_rmvqje.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674430/WhatsApp_Image_2026-06-29_at_12.49.13_AM_vbazdq.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674429/WhatsApp_Image_2026-06-29_at_12.49.13_AM_10_urkwy3.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674429/WhatsApp_Image_2026-06-29_at_12.49.13_AM_8_fdyxbj.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674429/WhatsApp_Image_2026-06-29_at_12.49.13_AM_11_gk9afy.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674429/WhatsApp_Image_2026-06-29_at_12.49.13_AM_9_wcy2ri.jpg",
+     "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674429/WhatsApp_Image_2026-06-29_at_12.49.13_AM_7_pdbc38.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674428/WhatsApp_Image_2026-06-29_at_12.49.13_AM_6_p2mifx.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674428/WhatsApp_Image_2026-06-29_at_12.49.13_AM_5_ru2sam.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674428/WhatsApp_Image_2026-06-29_at_12.49.13_AM_4_q5deu3.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674428/WhatsApp_Image_2026-06-29_at_12.49.13_AM_3_x5zaee.jpg",
+    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782674427/WhatsApp_Image_2026-06-29_at_12.49.13_AM_1_nqyrb0.jpg",
+   
     
 
-
-
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461410/015_nt9izn.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461358/011_sknfhp.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461319/010_ubs2lf.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461281/09_qutknt.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461241/08_lcvyvl.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461204/07_i7d7ei.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461168/06_hgcxyn.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461130/05_awoz0c.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461091/04_vwyuut.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461047/03_h4xn8c.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782461004/02_ulhqb1.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782460966/01_sbfzjf.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782460741/dm2_wkrogo.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782460705/dm_i5luso.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459605/prize2_oavxgv.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459559/prize1_zdhtdp.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459516/hall2_vr5kls.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782459436/hall1_afrgh6.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782457411/18_vqgyru.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782457548/WhatsApp_Image_2026-06-15_at_7.01.04_ikewn8.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782458056/abhishek_sedzrp.jpg",
-    "https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782457855/WhatsApp_Image_2026-06-26_at_12.38.58_PM_hmxxew.jpg"
 ];
 
 /* =====================
