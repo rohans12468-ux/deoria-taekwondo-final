@@ -724,6 +724,52 @@ header.scrolled{background:rgba(7,9,26,0.95);}
 }
 .program-card:hover .prog-arrow{gap:12px;}
 
+/* ═══ PROGRAM DETAIL MODAL ═══ */
+.prog-modal-overlay{
+  position:fixed;inset:0;z-index:9998;
+  background:rgba(4,6,16,0.82);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;opacity:0;pointer-events:none;transition:.35s ease;
+}
+.prog-modal-overlay.open{opacity:1;pointer-events:all;}
+.prog-modal{
+  width:100%;max-width:560px;max-height:85vh;overflow-y:auto;
+  background:linear-gradient(160deg,var(--navy2),var(--navy3));
+  border:1px solid var(--glass-border);border-radius:16px;
+  padding:44px 40px 40px;position:relative;
+  transform:translateY(30px) scale(0.97);transition:.4s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 40px 100px rgba(0,0,0,0.6);
+}
+.prog-modal-overlay.open .prog-modal{transform:translateY(0) scale(1);}
+.prog-modal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  border-radius:16px 16px 0 0;
+}
+.prog-modal-close{
+  position:absolute;top:18px;right:18px;width:34px;height:34px;
+  background:var(--glass);border:1px solid var(--glass-border);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;color:var(--text);
+  cursor:pointer;transition:.25s;font-size:14px;
+}
+.prog-modal-close:hover{background:var(--red);border-color:var(--red);color:#fff;}
+.prog-modal .prog-icon{margin-bottom:22px;}
+.prog-modal h3{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:1.5px;margin-bottom:6px;color:var(--white);}
+.prog-modal .prog-modal-tag{
+  font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2.5px;color:var(--gold);
+  text-transform:uppercase;margin-bottom:18px;display:block;
+}
+.prog-modal p.prog-modal-desc{font-size:14.5px;color:var(--text);margin-bottom:22px;}
+.prog-modal-list{display:flex;flex-direction:column;gap:10px;margin-bottom:26px;}
+.prog-modal-list div{
+  display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text);
+}
+.prog-modal-list i{color:var(--gold);margin-top:3px;flex-shrink:0;}
+@media(max-width:600px){
+  .prog-modal{padding:34px 24px 28px;}
+  .prog-modal h3{font-size:28px;}
+}
+
 /* ═══ NEWS ═══ */
 .news{background:var(--navy2);}
 .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:50px;}
@@ -752,6 +798,59 @@ header.scrolled{background:rgba(7,9,26,0.95);}
 .timeline-item:hover .timeline-num{background:var(--red);border-color:var(--red);color:white;}
 .timeline-content h3{font-size:18px;margin-bottom:8px;color:var(--white);}
 .timeline-content p{font-size:14px;line-height:1.7;}
+
+/* ═══ AFFILIATIONS ═══ */
+.affiliations{background:var(--navy2);}
+.affil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px;}
+.affil-card{
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;
+  padding:36px 26px;background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:14px;text-decoration:none;transition:.4s;position:relative;overflow:hidden;
+}
+.affil-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--red),var(--gold));transform:scaleX(0);transition:.4s;transform-origin:left;
+}
+.affil-card:hover{transform:translateY(-10px);border-color:rgba(240,180,41,0.3);background:rgba(240,180,41,0.04);}
+.affil-card:hover::before{transform:scaleX(1);}
+.affil-icon{
+  width:72px;height:72px;border-radius:50%;background:rgba(200,16,46,0.1);
+  border:2px solid rgba(240,180,41,0.3);display:flex;align-items:center;justify-content:center;
+  font-size:30px;color:var(--gold);transition:.4s;
+}
+.affil-card:hover .affil-icon{background:var(--red);border-color:var(--red);color:#fff;transform:scale(1.08);}
+.affil-card h4{font-size:16px;color:var(--white);font-weight:600;}
+.affil-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+.affil-visit{font-size:11px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:6px;}
+@media(max-width:768px){.affil-grid{grid-template-columns:1fr;}}
+
+/* ═══ MAP / FIND US ═══ */
+.find-us{background:var(--navy);}
+.map-wrap{
+  position:relative;border-radius:16px;overflow:hidden;
+  border:1px solid var(--glass-border);box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  margin-top:50px;
+}
+.map-wrap iframe{width:100%;height:420px;display:block;border:0;filter:grayscale(0.15) contrast(1.05);}
+.map-overlay-link{
+  position:absolute;left:24px;bottom:24px;z-index:3;
+  display:flex;align-items:center;gap:14px;
+  background:rgba(7,9,26,0.85);backdrop-filter:blur(10px);
+  border:1px solid var(--glass-border);border-radius:12px;
+  padding:16px 22px;text-decoration:none;transition:.3s;
+  max-width:90%;
+}
+.map-overlay-link:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 15px 40px rgba(240,180,41,0.15);}
+.map-overlay-link .moi{
+  width:46px;height:46px;flex-shrink:0;border-radius:10px;background:var(--red);
+  display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;
+}
+.map-overlay-link h4{font-size:14px;color:#fff;margin-bottom:3px;}
+.map-overlay-link span{font-size:11px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+@media(max-width:600px){
+  .map-wrap iframe{height:320px;}
+  .map-overlay-link{left:12px;right:12px;bottom:12px;padding:12px 16px;}
+}
 
 /* ═══ CONTACT ═══ */
 .contact{background:var(--navy2);}
@@ -823,6 +922,33 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
 .fab-tip{position:absolute;right:68px;top:50%;transform:translateY(-50%);background:var(--navy2);border:1px solid var(--glass-border);color:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:.3s;}
 .chat-fab:hover .fab-tip{opacity:1;}
 @keyframes fabFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+/* Auto-appearing nudge bubble (one-time) */
+.fab-nudge{
+  position:absolute;right:70px;bottom:6px;
+  background:var(--navy2);border:1px solid rgba(240,180,41,0.35);
+  color:#fff;font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:500;
+  padding:12px 16px;border-radius:12px;border-bottom-right-radius:3px;
+  white-space:nowrap;box-shadow:0 15px 40px rgba(0,0,0,0.5);
+  opacity:0;transform:translateY(8px) scale(0.94);pointer-events:none;
+  transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.fab-nudge.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
+.fab-nudge::after{
+  content:'';position:absolute;right:-6px;bottom:14px;
+  width:12px;height:12px;background:var(--navy2);
+  border-right:1px solid rgba(240,180,41,0.35);border-bottom:1px solid rgba(240,180,41,0.35);
+  transform:rotate(-45deg);
+}
+.fab-nudge .fn-close{
+  position:absolute;top:-8px;left:-8px;width:20px;height:20px;background:var(--cb-red);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;cursor:pointer;
+  border:2px solid var(--navy);
+}
+@media(max-width:600px){
+  .fab-nudge{right:66px;font-size:11.5px;padding:10px 14px;max-width:180px;white-space:normal;}
+}
+
 .chat-panel{position:fixed;bottom:100px;right:28px;width:380px;height:580px;background:var(--cb-bg);border-radius:20px;border:1px solid var(--cb-border);box-shadow:0 30px 80px rgba(0,0,0,0.7);display:flex;flex-direction:column;z-index:9997;overflow:hidden;transform:translateY(20px) scale(0.96);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.34,1.56,.64,1);}
 .chat-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}
 .cp-header{background:linear-gradient(135deg,#06101e,#0b1830);border-bottom:1px solid var(--cb-border);padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;position:relative;overflow:hidden;}
@@ -1188,19 +1314,19 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     <div class="red-line"></div>
   </div>
   <div class="program-grid">
-    <div class="program-card">
+    <div class="program-card" data-program="kyorugi">
       <div class="prog-icon"><i class="fas fa-fist-raised"></i></div>
       <h3>Kyorugi Sparring</h3>
       <p>Olympic style sparring with modern competition techniques, footwork, and counter-attack strategies.</p>
       <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
     </div>
-    <div class="program-card">
+    <div class="program-card" data-program="poomsae">
       <div class="prog-icon"><i class="fas fa-fire"></i></div>
       <h3>Poomsae Forms</h3>
       <p>Traditional forms for precision, balance and discipline — from Taeguek to Koryo and beyond.</p>
       <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
     </div>
-    <div class="program-card">
+    <div class="program-card" data-program="selfdefense">
       <div class="prog-icon"><i class="fas fa-shield-halved"></i></div>
       <h3>Self Defense</h3>
       <p>Practical self-defense techniques for real-world situations — build confidence and situational awareness.</p>
@@ -1209,6 +1335,19 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   </div>
 </div>
 </section>
+
+<!-- ═══ PROGRAM DETAIL MODAL ═══ -->
+<div class="prog-modal-overlay" id="progModalOverlay">
+  <div class="prog-modal" id="progModal">
+    <div class="prog-modal-close" id="progModalClose"><i class="fas fa-times"></i></div>
+    <div class="prog-icon" id="progModalIcon"><i class="fas fa-fist-raised"></i></div>
+    <span class="prog-modal-tag" id="progModalTag">Program</span>
+    <h3 id="progModalTitle">Kyorugi Sparring</h3>
+    <p class="prog-modal-desc" id="progModalDesc"></p>
+    <div class="prog-modal-list" id="progModalList"></div>
+    <a href="#contact" class="btn" id="progModalCta"><i class="fas fa-arrow-right"></i> Enquire About This Program</a>
+  </div>
+</div>
 
 <!-- OLYMPIC JOURNEY -->
 <section class="olympic reveal">
@@ -1240,6 +1379,60 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
       <div class="timeline-content"><h3>Olympic Qualification</h3><p>Represent India in Olympic qualification tournaments and aim for the ultimate dream — the Olympic Games.</p></div>
     </div>
   </div>
+</div>
+</section>
+
+<!-- ═══ AFFILIATIONS ═══ -->
+<section class="affiliations reveal" id="affiliations">
+<div class="container">
+  <div class="section-title">
+    <div class="section-label"><i class="fas fa-landmark"></i> Recognized By</div>
+    <h2>Our <span>Affiliations</span></h2>
+    <div class="red-line"></div>
+    <p>Deoria Taekwondo Association trains under the technical standards set by the sport's governing bodies at state, national and world level.</p>
+  </div>
+  <div class="affil-grid">
+    <a href="https://www.uptaekwondo.com/" target="_blank" rel="noopener" class="affil-card">
+      <div class="affil-icon"><i class="fas fa-map-marked-alt"></i></div>
+      <h4>UP Taekwondo Association</h4>
+      <p>State governing body developing and promoting Taekwondo across Uttar Pradesh.</p>
+      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
+    </a>
+    <a href="https://www.indiataekwondo.com/" target="_blank" rel="noopener" class="affil-card">
+      <div class="affil-icon"><i class="fas fa-flag"></i></div>
+      <h4>India Taekwondo</h4>
+      <p>National governing body for Taekwondo in India, recognized by the Ministry of Youth Affairs &amp; Sports.</p>
+      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
+    </a>
+    <a href="https://www.worldtaekwondo.org/" target="_blank" rel="noopener" class="affil-card">
+      <div class="affil-icon"><i class="fas fa-globe"></i></div>
+      <h4>World Taekwondo</h4>
+      <p>The international federation governing Olympic Taekwondo worldwide.</p>
+      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
+    </a>
+  </div>
+</div>
+</section>
+
+<!-- ═══ FIND US / MAP ═══ -->
+<section class="find-us reveal" id="find-us">
+<div class="container">
+  <div class="section-title">
+    <div class="section-label"><i class="fas fa-map-location-dot"></i> Visit Us</div>
+    <h2>Find Our <span>Dojang</span></h2>
+    <div class="red-line"></div>
+    <p>Training happens at Ravindra Kishor Shahi Sports Stadium, Deoria. Tap the map to get directions.</p>
+  </div>
+  <a class="map-wrap" href="https://www.google.com/maps/dir/?api=1&destination=Ravindra+Kishor+Shahi+Sports+Stadium,+Deoria,+Uttar+Pradesh" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
+    <iframe src="https://www.google.com/maps?q=Ravindra+Kishor+Shahi+Sports+Stadium,+Deoria,+Uttar+Pradesh&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ravindra Kishor Shahi Sports Stadium, Deoria — Map"></iframe>
+    <div class="map-overlay-link">
+      <div class="moi"><i class="fas fa-location-dot"></i></div>
+      <div>
+        <h4>Ravindra Kishor Shahi Sports Stadium</h4>
+        <span>Tap for Directions <i class="fas fa-diamond-turn-right"></i></span>
+      </div>
+    </div>
+  </a>
 </div>
 </section>
 
@@ -1337,6 +1530,10 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   <span class="fab-icon">🥋</span>
   <div class="fab-notif">AI</div>
   <div class="fab-tip">Ask Coach AI 💬</div>
+  <div class="fab-nudge" id="fabNudge">
+    <div class="fn-close" id="fabNudgeClose"><i class="fas fa-times"></i></div>
+    👋 Hey! I'm Coach AI — ask me anything about Taekwondo training here.
+  </div>
 </div>
 
 <div class="chat-panel" id="chatPanel">
@@ -1459,8 +1656,118 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   resetTimer();
 })();
 
+/* ═══ PROGRAM DETAIL MODAL ═══ */
+(function(){
+  const data = {
+    kyorugi: {
+      icon: 'fa-fist-raised',
+      tag: 'Sparring · Kyorugi',
+      title: 'Kyorugi Sparring',
+      desc: 'Olympic-style full-contact sparring where students learn real-time distancing, footwork and scoring technique under competition rules. Training moves from controlled drills to live sparring as skill and control develop.',
+      points: [
+        'Footwork, distancing & guard fundamentals',
+        'Scoring kicks: roundhouse, side, back & spin kicks',
+        'Counter-attacking and defensive strategy',
+        'Protective gear (hogu, headgear) sparring practice',
+        'Competition rules, refereeing & match simulation'
+      ]
+    },
+    poomsae: {
+      icon: 'fa-fire',
+      tag: 'Forms · Poomsae',
+      title: 'Poomsae Forms',
+      desc: 'A structured journey through the official Taeguek and Black Belt (Yudanja) forms, building balance, precision, breathing control and stance work — the technical backbone of every Taekwondo practitioner.',
+      points: [
+        'Taeguek 1–8 progression for colour belts',
+        'Black belt forms: Koryo, Keumgang, Taebaek & beyond',
+        'Stance accuracy, rhythm & breath control',
+        'Power, balance and technical precision drills',
+        'Preparation for grading and Poomsae competitions'
+      ]
+    },
+    selfdefense: {
+      icon: 'fa-shield-halved',
+      tag: 'Practical Training',
+      title: 'Self Defense',
+      desc: 'Practical, real-world self-defense built on Taekwondo fundamentals — designed to build situational awareness, quick reactions and the confidence to protect yourself in everyday situations.',
+      points: [
+        'Grip & grab escapes for common real-life scenarios',
+        'Strikes, blocks and close-range techniques',
+        'Situational awareness and de-escalation basics',
+        'Confidence and reaction-time building drills',
+        'Practical sessions for both kids and adults'
+      ]
+    }
+  };
 
+  const cards   = document.querySelectorAll('.program-card');
+  const overlay = document.getElementById('progModalOverlay');
+  const modal   = document.getElementById('progModal');
+  const closeBtn= document.getElementById('progModalClose');
+  const iconEl  = document.getElementById('progModalIcon');
+  const tagEl   = document.getElementById('progModalTag');
+  const titleEl = document.getElementById('progModalTitle');
+  const descEl  = document.getElementById('progModalDesc');
+  const listEl  = document.getElementById('progModalList');
 
+  function openModal(key){
+    const d = data[key];
+    if(!d) return;
+    iconEl.innerHTML = '<i class="fas '+d.icon+'"></i>';
+    tagEl.textContent = d.tag;
+    titleEl.textContent = d.title;
+    descEl.textContent = d.desc;
+    listEl.innerHTML = d.points.map(p=>'<div><i class="fas fa-check"></i><span>'+p+'</span></div>').join('');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  cards.forEach(card=>{
+    card.addEventListener('click', ()=> openModal(card.dataset.program));
+  });
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e=>{ if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeModal(); });
+})();
+
+/* ═══ AI ASSISTANT ONE-TIME NUDGE POPUP ═══ */
+(function(){
+  const fab   = document.getElementById('chatFab');
+  const nudge = document.getElementById('fabNudge');
+  const nudgeClose = document.getElementById('fabNudgeClose');
+  const panel = document.getElementById('chatPanel');
+  if(!fab || !nudge) return;
+
+  const SEEN_KEY = 'dta_ai_nudge_seen';
+
+  function hideNudge(){
+    nudge.classList.remove('show');
+  }
+
+  try{
+    if(!localStorage.getItem(SEEN_KEY)){
+      setTimeout(()=>{
+        // Don't show if chat is already open
+        if(!panel.classList.contains('open')){
+          nudge.classList.add('show');
+          localStorage.setItem(SEEN_KEY, '1');
+          // auto-hide after 8s if ignored
+          setTimeout(hideNudge, 8000);
+        }
+      }, 10000);
+    }
+  }catch(e){ /* localStorage unavailable, skip silently */ }
+
+  nudgeClose.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    hideNudge();
+  });
+  fab.addEventListener('click', hideNudge);
+})();
 
 // Close menu when clicking outside it
 document.addEventListener("click", (e) => {

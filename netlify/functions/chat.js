@@ -70,7 +70,56 @@ async function askGroq(lang, history) {
 
   return data.choices[0].message.content;
 }
+//ask OpenRouter is a function that sends a chat request to the OpenRouter API. It constructs a message history based on the provided language and conversation history, then makes a POST request to the OpenRouter endpoint. If the request is successful, it returns the generated response content; otherwise, it throws an error indicating that the OpenRouter request failed.
+async function askOpenRouter(lang, history) {
 
+    const messages = [
+        {
+            role: "system",
+            content: buildSystemPrompt(lang)
+        }
+    ];
+
+    history.forEach(item => {
+        messages.push({
+            role: item.role === "model" ? "assistant" : item.role,
+            content: item.parts[0].text
+        });
+    });
+
+    const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                "Content-Type": "application/json",
+
+                // Optional but recommended
+                "HTTP-Referer": "https://YOUR_NETLIFY_SITE.netlify.app",
+                "X-Title": "Deoria Taekwondo Chatbot"
+            },
+            body: JSON.stringify({
+
+                model: "openrouter/free",
+
+                messages,
+
+                temperature: 0.75,
+
+                max_tokens: 600
+
+            })
+        }
+    );
+
+    if (!response.ok)
+        throw new Error("OpenRouter failed");
+
+    const data = await response.json();
+
+    return data.choices[0].message.content;
+}
 exports.handler = async (event) => {
   // Only allow POST requests (visitor sending a chat message)
   if (event.httpMethod !== 'POST') {
@@ -78,10 +127,11 @@ exports.handler = async (event) => {
   }
 
   // The secret key lives ONLY here, set in Netlify's dashboard environment variables.
-  const geminiKey = process.env.GEMINI_API_KEY;
+ const geminiKey = process.env.GEMINI_API_KEY;
 const groqKey = process.env.GROQ_API_KEY;
+const openrouterKey = process.env.OPENROUTER_API_KEY;
 
-if (!geminiKey && !groqKey) {
+if (!geminiKey && !groqKey && !openrouterKey) {
   return {
     statusCode: 500,
     body: JSON.stringify({
@@ -113,7 +163,7 @@ if (!geminiKey && !groqKey) {
         generationConfig: { temperature: 0.75, maxOutputTokens: 600, topP: 0.9 }
       })
     });
-
+// If Gemini fails, try Groq, then OpenRouter, and if all fail, return an error.
     if (!response.ok) {
 
     console.log("Gemini failed");
@@ -134,20 +184,49 @@ if (!geminiKey && !groqKey) {
         };
 
     }
-    catch{
 
-        const errData =
-        await response.json().catch(()=>({}));
+    catch {
 
-        return {
-            statusCode:502,
-            body:JSON.stringify({
-                error:
-                errData?.error?.message
-                ||
-                "Both Gemini and Groq failed."
-            })
-        };
+        console.log("Groq failed");
+
+        try {
+
+            const openRouterReply =
+                await askOpenRouter(safeLang, history);
+
+            return {
+                statusCode:200,
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    reply:openRouterReply
+                })
+            };
+
+        }
+
+        catch {
+
+            const errData =
+            await response.json().catch(()=>({}));
+
+            return {
+
+                statusCode:502,
+
+                body:JSON.stringify({
+
+                    error:
+                    errData?.error?.message
+                    ||
+                    "Gemini, Groq and OpenRouter all failed."
+
+                })
+
+            };
+
+        }
 
     }
 
