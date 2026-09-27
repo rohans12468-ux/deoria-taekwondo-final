@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gallery | Deoria Taekwondo Academy</title>
+<title>Gallery | Deoria Taekwondo Association</title>
+<meta name="description" content="Training photos from Deoria Taekwondo Association — sessions, championships and academy life.">
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782634605/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9_ptiuvb.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -180,13 +182,12 @@ header {
 .popup {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.96);
+    background: rgba(4, 6, 16, 0.94);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    padding: 16px;
-    /* Prevent body scroll when open */
+    padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
 }
 
 .popup.active {
@@ -195,6 +196,8 @@ header {
 
 .popup-inner {
     position: relative;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
     max-height: 100%;
     display: flex;
@@ -203,31 +206,34 @@ header {
 }
 
 .popup img {
-    max-width: 100%;
-    max-height: 90vh;
+    max-width: min(1100px, 92vw);
+    max-height: min(82dvh, 82vh);
     width: auto;
     height: auto;
-    border-radius: 14px;
+    border-radius: 10px;
     object-fit: contain;
     display: block;
-    /* Prevent long-press save on mobile */
     -webkit-user-select: none;
     user-select: none;
-   
+    pointer-events: none;
 }
 
 .close-btn {
     position: fixed;
-    top: 18px;
-    right: 22px;
-    font-size: 38px;
-    color: rgba(255,255,255,0.85);
+    top: max(12px, env(safe-area-inset-top));
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    font-size: 28px;
+    color: rgba(255,255,255,0.9);
     cursor: pointer;
     z-index: 10000;
     line-height: 1;
-    transition: color 0.2s;
-    /* Larger tap target on mobile */
-    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.45);
+    border-radius: 8px;
 }
 
 .close-btn:hover {
@@ -474,10 +480,14 @@ footer p {
     transform:translateY(0);
 }
 
-.scroll-top-btn:hover{
-    background:#dc2626;
-    color:#fff;
-    transform:translateY(-4px);
+body.lightbox-open {
+    overflow: hidden;
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 @media(max-width:600px){
@@ -517,7 +527,8 @@ footer p {
 
 <!-- Gallery Category Buttons -->
 <div class="gallery-buttons">
-    <a href="poomsae.html" class="gallery-btn active">Poomsae Event photos</a>
+    <a href="gallery.html" class="gallery-btn active">Academy Photos</a>
+    <a href="poomsae.html" class="gallery-btn">Poomsae Event</a>
     <a href="other.html" class="gallery-btn">Other Photos</a>
 </div>
 
@@ -550,12 +561,7 @@ footer p {
 
 
 
-<script src="https://unpkg.com/@panzoom/panzoom/dist/panzoom.min.js"></script>
 <script>
-
-/* =====================
-   IMAGE LIST — 22 photos
-===================== */
 const imageList = [
     
 
@@ -605,123 +611,10 @@ imageList.forEach((url, index) => {
     galleryGrid.appendChild(card);
 });
 
-/* =====================
-   LIGHTBOX LOGIC
-===================== */
-const popup     = document.getElementById('popup');
-
-const popupImg  = document.getElementById('popupImg');
-let panzoom;
-const closeBtn  = document.getElementById('closeBtn');
-const prevBtn   = document.getElementById('prevBtn');
-const nextBtn   = document.getElementById('nextBtn');
-const counter   = document.getElementById('imgCounter');
-
-let currentIndex = 0;
-
-function openPopup(index){
-
-    currentIndex = index;
-    popupImg.src = imageList[currentIndex];
-    counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
-
-    popup.classList.add("active");
-    document.body.style.overflow = "hidden";
-
-    popupImg.onload = () => {
-
-        if(panzoom){
-            panzoom.destroy();
-        }
-
-        panzoom = Panzoom(popupImg,{
-            maxScale:5,
-            minScale:1,
-            contain:"outside"
-        });
-
-        popupImg.parentElement.addEventListener("wheel", panzoom.zoomWithWheel);
-
-    };
-
-}
-
-function closePopup(){
-
-    popup.classList.remove("active");
-    document.body.style.overflow="";
-
-    if(panzoom){
-        panzoom.destroy();
-        panzoom = null;
-    }
-
-}
-
-function showNext() {
-    currentIndex = (currentIndex + 1) % imageList.length;
-    popupImg.src = imageList[currentIndex];
-    if(panzoom){
-    panzoom.reset();
-}
-    counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
-}
-
-function showPrev() {
-    currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
-    popupImg.src = imageList[currentIndex];
-    if(panzoom){
-    panzoom.reset();
-}
-    counter.textContent = `${currentIndex + 1} / ${imageList.length}`;
-}
-
-/* Card click — open lightbox */
-galleryGrid.addEventListener('click', (e) => {
-    const card = e.target.closest('.gallery-card');
-    if (card) openPopup(parseInt(card.dataset.index));
-});
-
-closeBtn.addEventListener('click', closePopup);
-nextBtn.addEventListener('click', showNext);
-prevBtn.addEventListener('click', showPrev);
-
-/* Click backdrop to close */
-popup.addEventListener('click', (e) => {
-    if (e.target === popup) closePopup();
-});
-
-/* Keyboard navigation */
-document.addEventListener('keydown', (e) => {
-    if (!popup.classList.contains('active')) return;
-    if (e.key === 'ArrowRight') showNext();
-    if (e.key === 'ArrowLeft')  showPrev();
-    if (e.key === 'Escape')     closePopup();
-});
-
-/* =====================
-   SWIPE SUPPORT (mobile)
-===================== */
-let touchStartX = 0;
-let touchEndX   = 0;
-
-popup.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-}, { passive: true });
-
-popup.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    const diff = touchStartX - touchEndX;
-    if (Math.abs(diff) > 50) {
-        if (diff > 0) showNext();
-        else showPrev();
-    }
-}, { passive: true });
-
-/* =====================
-   SCROLL TO TOP
-===================== */
-
+window.imageList = imageList;
+</script>
+<script src="assets/js/gallery-lightbox.js"></script>
+<script>
 const scrollBtn = document.getElementById("scrollTopBtn");
 
 window.addEventListener("scroll", () => {

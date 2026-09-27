@@ -23,19 +23,15 @@ never made it to GitHub.
 
 ```
 deoria-taekwondo/
-├── index.html                  ← your webpage (no secrets inside anymore)
-├── assets/
-│   └── js/
-│       ├── ui.js                ← cursor, menu, gallery, animations
-│       ├── firebase-app.js      ← contact form + news list
-│       └── chatbot.js           ← chat widget (talks to OUR backend, not Google directly)
-├── netlify/
-│   └── functions/
-│       └── chat.js              ← 🔒 the ONLY place your real AI key lives
-├── netlify.toml                 ← tells Netlify how to run the site + function
-├── firestore.rules              ← copy this into Firebase Console to stop spam
-├── .gitignore                   ← stops secret files from ever being committed
-└── .env.example                 ← just a reminder of the variable name, not a real secret
+├── index.html                  ← homepage (no secrets)
+├── gallery.html / poomsae.html / other.html
+├── videos.html
+├── assets/js/ui.js             ← menu, gallery, animations
+├── assets/js/chatbot.js        ← chat widget (talks to OUR backend)
+├── netlify/functions/chat.js   ← 🔒 the ONLY place your real AI key lives
+├── netlify.toml
+├── .gitignore
+└── .env.example
 ```
 
 **Why a "function" instead of calling Google straight from the browser?**
@@ -103,24 +99,12 @@ folder logic, just renamed, would need small adjustments.)
 That's it — your chatbot will now work, and the key is never visible to anyone
 visiting the site or browsing your GitHub repo.
 
----
-
-## 🔒 STEP 6 — Lock down your database (Firestore)
-
-Right now, without rules, your "contacts" and "news" data could potentially be
-read or written by anyone who finds your Firebase project ID — that's a separate
-issue from the API key, but worth fixing before going fully public.
-
-1. Go to **[Firebase Console](https://console.firebase.google.com)** → your project → **Firestore Database → Rules**.
-2. Replace the rules with the contents of `firestore.rules` from this project.
-3. Click **Publish**.
-
-(Note: your Firebase "apiKey" in `firebase-app.js` is fine to be public — that's
-how Google designed it. These Firestore Rules are the actual lock on the door.)
+Optional backups: you can also add `GROQ_API_KEY` and/or `OPENROUTER_API_KEY`
+in Netlify. The chat function tries Gemini first, then Groq, then OpenRouter.
 
 ---
 
-## 🌍 STEP 7 — Custom domain (optional)
+## 🌍 STEP 6 — Custom domain (optional)
 
 In Netlify: **Domain management → Add a domain**, then point your domain's DNS
 to Netlify following their on-screen instructions. Your site will get free
@@ -134,7 +118,6 @@ HTTPS automatically.
 |---|---|
 | Text, sections, images, layout | `index.html` |
 | Photo gallery pictures | `assets/js/ui.js` → the `GALLERY_IMGS` list near the top |
-| Contact form behaviour | `assets/js/firebase-app.js` |
 | Chatbot personality / rules | `netlify/functions/chat.js` → the `buildSystemPrompt` function |
 | Chatbot suggested question chips | `assets/js/chatbot.js` → the `CHIPS` list |
 | Colors / fonts | `index.html` → inside `<style>`, the `:root { --red: ...; --gold: ...; }` section at the top |
@@ -151,6 +134,4 @@ search for what you want to change and read the note right above it.
 - [ ] Site pushed to GitHub successfully (no more push-protection error)
 - [ ] Site deployed on Netlify and loads correctly
 - [ ] Chatbot replies when you test it on the live site
-- [ ] Contact form submits and shows up in Firebase Console
-- [ ] Firestore Security Rules published
 - [ ] (Optional) Custom domain connected

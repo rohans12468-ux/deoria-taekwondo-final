@@ -152,101 +152,57 @@ if (!geminiKey && !groqKey && !openrouterKey) {
     }
 
     const safeLang = lang === 'hinglish' ? 'hinglish' : 'english';
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
 
-    const response = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: buildSystemPrompt(safeLang) }] },
-        contents: history,
-        generationConfig: { temperature: 0.75, maxOutputTokens: 600, topP: 0.9 }
-      })
-    });
-// If Gemini fails, try Groq, then OpenRouter, and if all fail, return an error.
-    if (!response.ok) {
-
-    console.log("Gemini failed");
+    async function tryGemini() {
+      if (!geminiKey) throw new Error('No Gemini key');
+      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
+      const response = await fetch(geminiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: buildSystemPrompt(safeLang) }] },
+          contents: history,
+          generationConfig: { temperature: 0.75, maxOutputTokens: 600, topP: 0.9 }
+        })
+      });
+      if (!response.ok) throw new Error('Gemini failed');
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t generate a reply.';
+    }
 
     try {
-
-        const groqReply =
-            await askGroq(safeLang, history);
-
+      const reply = await tryGemini();
+      return {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reply })
+      };
+    } catch (e) {
+      console.log('Gemini failed');
+      try {
+        const groqReply = await askGroq(safeLang, history);
         return {
-            statusCode:200,
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                reply:groqReply
-            })
+          statusCode: 200,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ reply: groqReply })
         };
-
-    }
-
-    catch {
-
-        console.log("Groq failed");
-
+      } catch {
+        console.log('Groq failed');
         try {
-
-            const openRouterReply =
-                await askOpenRouter(safeLang, history);
-
-            return {
-                statusCode:200,
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    reply:openRouterReply
-                })
-            };
-
+          const openRouterReply = await askOpenRouter(safeLang, history);
+          return {
+            statusCode: 200,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reply: openRouterReply })
+          };
+        } catch {
+          return {
+            statusCode: 502,
+            body: JSON.stringify({ error: 'Gemini, Groq and OpenRouter all failed.' })
+          };
         }
-
-        catch {
-
-            const errData =
-            await response.json().catch(()=>({}));
-
-            return {
-
-                statusCode:502,
-
-                body:JSON.stringify({
-
-                    error:
-                    errData?.error?.message
-                    ||
-                    "Gemini, Groq and OpenRouter all failed."
-
-                })
-
-            };
-
-        }
-
+      }
     }
-
-}
-   const data = await response.json();
-
-const reply =
-data.candidates?.[0]?.content?.parts?.[0]?.text
-||
-"Sorry, I couldn't generate a reply.";
-
-return {
-  statusCode: 200,
-  headers: {
-    "Content-Type":"application/json"
-  },
-  body: JSON.stringify({
-    reply
-  })
-};
   } catch (err) {
     return { statusCode: 500, body: JSON.stringify({ error: 'Unexpected server error.' }) };
   }

@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Videos | Deoria Taekwondo Academy</title>
-<meta name="description" content="Watch training sessions, competition highlights and academy videos from Deoria Taekwondo Academy."/>
+<title>Videos | Deoria Taekwondo Association</title>
+<meta name="description" content="Watch training sessions, competition highlights and academy videos from Deoria Taekwondo Association."/>
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782634605/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9_ptiuvb.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
@@ -41,7 +42,7 @@ header{position:sticky;width:100%;top:0;left:0;z-index:998;background:rgba(7,9,2
 
 /* CATEGORY TABS */
 .video-tabs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:0 7% 50px;}
-.vtab{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:var(--glass);border:1px solid var(--glass-border);border-radius:99px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.3s;letter-spacing:.5px;}
+.vtab{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:var(--glass);border:1px solid var(--glass-border);border-radius:99px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.3s;letter-spacing:.5px;font-family:'Poppins',sans-serif;}
 .vtab.active,.vtab:hover{background:rgba(200,16,46,0.12);border-color:var(--red);color:var(--white);}
 .vtab i{font-size:11px;}
 
@@ -75,10 +76,16 @@ footer span{color:var(--red);}
 
 @media(max-width:768px){
   .video-grid{grid-template-columns:1fr;}
-  .navbar{padding:14px 5%;}
+  .navbar{padding:14px 5%;gap:10px;}
   .videos-section{padding:0 5% 80px;}
   .video-tabs{padding:0 5% 40px;}
+  .videos-hero{padding:80px 5% 48px;}
+  .back-btn{padding:10px 14px;font-size:12px;}
+  .logo-text p{display:none;}
+  footer{padding:28px 5%;}
 }
+.video-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));}
+html,body{width:100%;max-width:100%;overflow-x:hidden;}
 </style>
 </head>
 <body>
@@ -107,11 +114,11 @@ footer span{color:var(--red);}
 
 <!-- CATEGORY TABS -->
 <div class="video-tabs">
-  <div class="vtab active" data-cat="all"><i class="fas fa-th"></i> All Videos</div>
-  <div class="vtab" data-cat="training"><i class="fas fa-fist-raised"></i> Training</div>
-  <div class="vtab" data-cat="competition"><i class="fas fa-trophy"></i> Competitions</div>
-  <div class="vtab" data-cat="ceremony"><i class="fas fa-medal"></i> Ceremonies</div>
-  <div class="vtab" data-cat="camp"><i class="fas fa-campground"></i> Camps</div>
+  <button type="button" class="vtab active" data-cat="all"><i class="fas fa-th"></i> All Videos</button>
+  <button type="button" class="vtab" data-cat="training"><i class="fas fa-fist-raised"></i> Training</button>
+  <button type="button" class="vtab" data-cat="competition"><i class="fas fa-trophy"></i> Competitions</button>
+  <button type="button" class="vtab" data-cat="ceremony"><i class="fas fa-medal"></i> Ceremonies</button>
+  <button type="button" class="vtab" data-cat="camp"><i class="fas fa-campground"></i> Camps</button>
 </div>
 
 <!-- VIDEO GRID -->
@@ -177,6 +184,14 @@ const VIDEOS = [
   },
 ];
 
+function youtubeId(raw) {
+  if (!raw) return '';
+  const s = String(raw).trim().replace(/^dhttps/i, 'https');
+  if (/^[\w-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/);
+  return m ? m[1] : s;
+}
+
 const CATEGORY_LABELS = {
   training:    'Training',
   competition: 'Competition',
@@ -207,7 +222,7 @@ function renderVideos() {
     card.innerHTML = `
       <div class="yt-embed">
         <iframe
-          src="https://www.youtube.com/embed/${v.id}?rel=0&modestbranding=1"
+          src="https://www.youtube.com/embed/${youtubeId(v.id)}?rel=0&modestbranding=1"
           title="${v.title}"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen

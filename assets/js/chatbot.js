@@ -29,13 +29,26 @@ const msgs = document.getElementById('cpMessages');
 const cbInput = document.getElementById('cbInput');
 const cbSend = document.getElementById('cbSend');
 
+if (fab && panel && msgs && cbInput && cbSend) {
 fab.addEventListener('click', () => togglePanel(true));
+fab.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    togglePanel(!panelOpen);
+  }
+});
 document.getElementById('cpClose').addEventListener('click', () => togglePanel(false));
 
 function togglePanel(open) {
   panelOpen = open;
   panel.classList.toggle('open', open);
   fab.style.animation = open ? 'none' : '';
+  fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if (window.innerWidth < 768) {
+    document.body.classList.toggle('chat-open', open);
+  } else {
+    document.body.classList.remove('chat-open');
+  }
   if (open && !cbLang) renderLangSelect();
 }
 
@@ -166,7 +179,7 @@ function esc(s) {
 }
 // Turns the AI's plain-text reply (with **bold**, bullet points, etc.) into safe HTML
 function md2html(t) {
-  return t
+  return esc(t)
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     .replace(/^#{1,3} (.+)$/gm, '<strong style="display:block;margin-top:8px;color:#f0b429">$1</strong>')
@@ -244,3 +257,7 @@ cbInput.addEventListener('input', () => {
 document.addEventListener('click', (e) => {
   if (panelOpen && !panel.contains(e.target) && !fab.contains(e.target)) togglePanel(false);
 });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && panelOpen) togglePanel(false);
+});
+}

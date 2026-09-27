@@ -39,16 +39,7 @@ body{
   cursor:default;
 }
 
-.cursor-dot{
-  width:8px;height:8px;background:var(--gold);border-radius:50%;
-  position:fixed;top:0;left:0;pointer-events:none;z-index:99999;
-  transform:translate(-50%,-50%);transition:transform .1s;
-}
-.cursor-ring{
-  width:36px;height:36px;border:1.5px solid rgba(240,180,41,0.5);border-radius:50%;
-  position:fixed;top:0;left:0;pointer-events:none;z-index:99998;
-  transform:translate(-50%,-50%);transition:transform .15s,width .3s,height .3s;
-}
+
 
 body::before{
   content:'';position:fixed;inset:0;
@@ -608,6 +599,35 @@ header.scrolled{background:rgba(7,9,26,0.95);}
   transition:.5s;
 }
 .coach-image:hover img{transform:scale(1.02);}
+.president-photo-col .coach-image{max-width:380px;width:100%;margin:0;}
+.president-photo-col .coach-image img{
+  width:100%;max-width:380px;height:auto;max-height:min(520px,70vh);
+  object-fit:contain;object-position:center top;display:block;
+}
+.photo-fallback{
+  display:none;width:100%;min-height:280px;max-width:380px;margin:0 auto;
+  border:1px dashed rgba(240,180,41,0.35);border-radius:4px;
+  background:linear-gradient(135deg,var(--navy2),var(--navy3));
+  color:var(--muted);text-align:center;padding:40px 20px;
+  font-size:13px;line-height:1.6;
+}
+.photo-fallback strong{display:block;color:var(--gold);letter-spacing:2px;margin-bottom:8px;font-size:12px;}
+.president{background:var(--navy2);}
+.president-photo-col{max-width:380px;width:100%;margin:0 auto;}
+.president-info{
+  margin-top:18px;text-align:left;
+  padding:18px 4px 0;
+}
+.president-info .pi-role{
+  font-family:'Orbitron',monospace;font-size:11px;letter-spacing:3px;
+  color:var(--gold);margin-bottom:8px;
+}
+.president-info h3{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,44px);
+  letter-spacing:2px;line-height:1;margin-bottom:10px;color:var(--white);
+}
+.president-info p{font-size:14px;color:var(--text);line-height:1.7;}
+.president-info .pi-org{color:var(--muted);font-size:13px;margin-bottom:10px;}
 .coach-image::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(0deg,var(--navy) 0%,transparent 40%);
@@ -692,7 +712,7 @@ header.scrolled{background:rgba(7,9,26,0.95);}
 }
 .gallery-arrow:hover{background:var(--red);border-color:var(--red);}
 .gallery-dots{display:flex;gap:8px;align-items:center;}
-.gallery-dot{width:6px;height:6px;background:var(--muted);border-radius:50%;cursor:pointer;transition:.3s;}
+.gallery-dot{width:6px;height:6px;background:var(--muted);border-radius:50%;cursor:pointer;transition:.3s;border:none;padding:0;}
 .gallery-dot.active{width:24px;border-radius:99px;background:var(--gold);}
 
 /* ═══ PROGRAMS ═══ */
@@ -814,11 +834,27 @@ header.scrolled{background:rgba(7,9,26,0.95);}
 .affil-card:hover{transform:translateY(-10px);border-color:rgba(240,180,41,0.3);background:rgba(240,180,41,0.04);}
 .affil-card:hover::before{transform:scaleX(1);}
 .affil-icon{
-  width:72px;height:72px;border-radius:50%;background:rgba(200,16,46,0.1);
-  border:2px solid rgba(240,180,41,0.3);display:flex;align-items:center;justify-content:center;
-  font-size:30px;color:var(--gold);transition:.4s;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid rgba(240,180,41,0.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+  transition:.4s;
+  overflow:hidden;
 }
-.affil-card:hover .affil-icon{background:var(--red);border-color:var(--red);color:#fff;transform:scale(1.08);}
+.affil-icon img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+  transform:scale(1.35);
+}
+.affil-card:hover .affil-icon{transform:scale(1.04);box-shadow:0 12px 28px rgba(0,0,0,0.25);}
 .affil-card h4{font-size:16px;color:var(--white);font-weight:600;}
 .affil-card p{font-size:12px;color:var(--muted);line-height:1.6;}
 .affil-visit{font-size:11px;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase;font-weight:600;display:flex;align-items:center;gap:6px;}
@@ -888,8 +924,8 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;margin-bottom:50px;}
 .footer-brand h2{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;margin-bottom:14px;}
 .footer-brand p{font-size:14px;color:var(--muted);max-width:280px;line-height:1.7;}
-.footer-socials{display:flex;gap:12px;margin-top:24px;}
-.footer-social{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--glass);border:1px solid var(--glass-border);color:var(--muted);text-decoration:none;transition:.3s;}
+.footer-socials{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+.footer-social{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--glass);border:1px solid var(--glass-border);color:var(--muted);text-decoration:none;transition:.3s;font-size:16px;}
 .footer-social:hover{background:var(--red);border-color:var(--red);color:white;transform:translateY(-4px);}
 .footer-col h4{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
 .footer-col a{display:block;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:12px;transition:.3s;}
@@ -915,7 +951,7 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
   --cb-bg:#060b18;--cb-card:#0e1526;--cb-card2:#152030;
   --cb-border:rgba(255,255,255,0.07);--cb-text:#8a9bb5;
 }
-.chat-fab{position:fixed;bottom:28px;right:28px;width:58px;height:58px;background:linear-gradient(135deg,var(--cb-red),#7a0a1a);border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9996;box-shadow:0 8px 30px rgba(200,16,46,0.5);border:1px solid rgba(240,180,41,0.25);transition:.3s;animation:fabFloat 3s ease-in-out infinite;}
+.chat-fab{position:fixed;bottom:28px;right:28px;width:58px;height:58px;background:linear-gradient(135deg,var(--cb-red),#7a0a1a);border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9996;box-shadow:0 8px 30px rgba(200,16,46,0.5);border:1px solid rgba(240,180,41,0.25);transition:.3s;animation:fabFloat 3s ease-in-out infinite;color:inherit;font:inherit;padding:0;}
 .chat-fab:hover{transform:scale(1.1) !important;border-radius:50%;}
 .fab-icon{font-size:24px;}
 .fab-notif{position:absolute;top:-6px;right:-6px;width:20px;height:20px;background:var(--cb-gold);border-radius:50%;border:2px solid var(--navy);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#000;}
@@ -963,7 +999,7 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
 .cp-actions{display:flex;gap:8px;align-items:center;}
 .cp-lang-btn{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,0.05);border:1px solid var(--cb-border);border-radius:6px;padding:5px 10px;font-size:10px;font-weight:600;color:var(--cb-text);cursor:pointer;transition:.25s;font-family:'Poppins',sans-serif;}
 .cp-lang-btn:hover{border-color:var(--cb-gold);color:var(--cb-gold);}
-.cp-close{width:28px;height:28px;background:rgba(255,255,255,0.05);border:1px solid var(--cb-border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--cb-text);font-size:12px;transition:.25s;}
+.cp-close{width:28px;height:28px;background:rgba(255,255,255,0.05);border:1px solid var(--cb-border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--cb-text);font-size:12px;transition:.25s;padding:0;}
 .cp-close:hover{background:var(--cb-red);color:#fff;border-color:var(--cb-red);}
 .cp-messages{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:12px;background:var(--cb-bg);scroll-behavior:smooth;}
 .cp-messages::-webkit-scrollbar{width:3px;}
@@ -1013,10 +1049,40 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
 .cb-send:disabled{background:#1f2937;cursor:not-allowed;}
 .cp-hint{text-align:center;font-size:10px;color:var(--cb-text);margin-top:6px;opacity:.4;letter-spacing:.5px;font-family:'Poppins',sans-serif;}
 
+/* ═══ IMAGE LIGHTBOX ═══ */
+.img-lightbox{
+  position:fixed;inset:0;z-index:10050;
+  background:rgba(4,6,16,0.94);
+  display:none;align-items:center;justify-content:center;
+  padding:max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+}
+.img-lightbox.active{display:flex;}
+.img-lightbox img{
+  max-width:min(1100px, 92vw);
+  max-height:min(86dvh, 86vh);
+  width:auto;height:auto;
+  object-fit:contain;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.45);
+}
+.img-lightbox-close{
+  position:absolute;top:max(12px, env(safe-area-inset-top));right:16px;
+  width:44px;height:44px;border:1px solid var(--glass-border);
+  background:rgba(7,9,26,0.85);color:#fff;border-radius:8px;
+  font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+body.lightbox-open,body.chat-open{overflow:hidden;}
+
+img,video,iframe{max-width:100%;}
+.hero video{max-width:none;}
+
 /* ═══ MOBILE ═══ */
 @media(max-width:992px){
   .about-grid,.coach-layout,.contact-grid{grid-template-columns:1fr;}
   .about-img-badge{right:0;bottom:0;}
+  .president .coach-content h3,
+  .president .coach-content h2{display:none;}
+  .president-photo-col{margin:0;}
   .coach-image::after{display:none;}
   .coach-cred{position:static;margin-top:10px;}
   .coach-cred-1,.coach-cred-2{position:static;}
@@ -1024,29 +1090,62 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
   .footer-grid{grid-template-columns:1fr 1fr;}
   .hero-stats{display:none;}
   .timeline-item{grid-template-columns:60px 1fr;}
+  .president-photo-col .coach-image,
+  .president-photo-col .coach-image img,
+  .photo-fallback{max-width:340px;}
+  .social-icon{width:56px;height:56px;font-size:24px;}
+  .social-info h4{font-size:18px;}
+  .affil-grid{grid-template-columns:repeat(3,1fr);gap:16px;}
 }
 @media(max-width:768px){
-  .nav-links{position:fixed;top:0;right:-100%;width:280px;height:100vh;background:var(--navy2);flex-direction:column;padding:80px 30px 30px;transition:.4s;z-index:9000;gap:0;border-left:1px solid var(--glass-border);}
-  .nav-links a{padding:16px 0;border-bottom:1px solid var(--glass-border);font-size:15px;}
+  .nav-links{position:fixed;top:0;right:-100%;width:min(280px,86vw);height:100dvh;background:var(--navy2);flex-direction:column;padding:80px 30px 30px;transition:.4s;z-index:9000;gap:0;border-left:1px solid var(--glass-border);overflow-y:auto;}
+  .nav-links a{padding:16px 0;border-bottom:1px solid var(--glass-border);font-size:15px;min-height:44px;display:flex;align-items:center;}
   .nav-links.active{right:0;}
-  .mobile-toggle{display:block;}
+  .mobile-toggle{display:block;min-width:44px;min-height:44px;}
   .nav-cta{display:none;}
   .program-grid{grid-template-columns:1fr;}
-  .footer-grid{grid-template-columns:1fr;}
-  .footer-col{display:none;}
-  section{padding:80px 5%;}
-  .section-title h2{font-size:42px;}
+  .footer-grid{grid-template-columns:1fr;gap:28px;}
+  .footer-col{display:block;}
+  section{padding:72px 5%;}
+  .section-title h2{font-size:clamp(32px,9vw,42px);}
   .gallery-3d-wrap{height:400px;}
   .gallery-3d-track,.gallery-3d-slide{width:220px;height:340px;}
-  .chat-panel{width:calc(100vw - 20px);left:10px;right:10px;bottom:10px;height:min(600px, calc(100dvh - 20px));max-height:calc(100dvh - 20px);}
-  .chat-fab{bottom:18px;right:18px;}
+  .chat-panel{width:calc(100vw - 20px);left:10px;right:10px;bottom:10px;height:min(560px, calc(100dvh - 24px));max-height:calc(100dvh - 24px);max-width:100%;}
+  .chat-fab{bottom:max(16px, env(safe-area-inset-bottom));right:16px;width:50px;height:50px;border-radius:14px;}
+  .fab-icon{font-size:20px;}
+  .fab-tip{display:none;}
+  .scroll-top{right:16px;bottom:78px;width:42px;height:42px;}
   .contact-grid{grid-template-columns:1fr;}
   .about-img-badge{right:0;}
+  .social-card{gap:14px;padding:14px;}
+  .social-icon{width:44px;height:44px;font-size:20px;}
+  .social-info h4{font-size:15px;}
+  .footer-socials{gap:10px;}
+  .footer-social{width:40px;height:40px;font-size:15px;}
+  .affil-grid{grid-template-columns:1fr;gap:16px;}
+  .affil-icon{width:96px;height:96px;}
+  .hero{height:auto;min-height:100svh;}
+  .logo-text h2{font-size:18px;}
+  .navbar{padding:12px 5%;gap:10px;}
+  .btn,.btn-gallery-highlight{min-height:44px;}
+  .president-photo-col .coach-image img{max-height:min(460px,62vh);}
+  .map-overlay-link{max-width:calc(100% - 24px);}
+  .btn-gallery-highlight{padding:16px 22px;font-size:13px;max-width:100%;}
+  .gallery-cta-wrap{padding:0 5% 40px;margin-top:24px;}
+  body.chat-open .chat-fab,body.chat-open .scroll-top{visibility:hidden;pointer-events:none;}
+  .about-img-badge{padding:14px 16px;}
+  .about-img-badge h3{font-size:32px;}
 }
 @media(max-width:480px){
-  .hero-content h1{font-size:52px;}
+  .hero-content h1{font-size:clamp(40px,12vw,52px);}
   .hero-btns{flex-direction:column;}
-  .hero-btns .btn{text-align:center;justify-content:center;}
+  .hero-btns .btn{text-align:center;justify-content:center;width:100%;}
+  .footer-socials{gap:8px;}
+  .footer-social{width:38px;height:38px;font-size:14px;}
+  .ticker-item{padding:0 22px;font-size:13px;}
+  .chat-panel{left:8px;right:8px;width:auto;bottom:8px;height:calc(100dvh - 16px);border-radius:16px;}
+  .ls-options{flex-direction:column;}
+  .bubble{max-width:86%;}
 }
 @media (max-width:768px){
   .cursor-dot,.cursor-ring{display:none !important;}
@@ -1059,8 +1158,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 </head>
 <body>
 
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+
 
 <header id="header">
 <div class="navbar">
@@ -1075,13 +1173,14 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#coach">Coach</a>
+    <a href="#president">President</a>
     <a href="#programs">Programs</a>
     <a href="gallery.html">Gallery</a>
     <a href="videos.html">Videos</a>
     <a href="#contact">Contact</a>
   </nav>
   <a href="#contact" class="nav-cta">Join Now</a>
-  <button class="mobile-toggle" id="menuBtn"><i class="fas fa-bars"></i></button>
+  <button class="mobile-toggle" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><i class="fas fa-bars"></i></button>
 </div>
 </header>
 
@@ -1236,7 +1335,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 <div class="container">
   <div class="coach-layout">
     <div class="coach-image reveal-left">
-      <img src="https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/Girish%20Singh.jpg" alt="Coach Girish Singh">
+      <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1789852003/WhatsApp_Image_2026-09-20_at_2.34.45_AM_dsdegi.jpg" alt="Coach Girish Singh">
       <div class="coach-cred coach-cred-1">
         <h4>🌍 International Athlete</h4>
         <p>World-level competition experience</p>
@@ -1261,9 +1360,43 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 </div>
 </section>
 
+<!-- PRESIDENT -->
+<section class="president reveal" id="president">
+<div class="container">
+  <div class="coach-layout">
+    <div class="president-photo-col reveal-left">
+      <div class="coach-image">
+        <!-- Put the President photo here: assets/images/president.jpg -->
+        <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1789852182/WhatsApp_Image_2026-09-20_at_2.34.46_AM_mqpmoo.jpg" alt="President of Deoria Taekwondo Association" width="380" height="480" onerror="this.style.display='none';var fb=this.nextElementSibling;if(fb)fb.style.display='block';">
+        <div class="photo-fallback">
+          <strong>PRESIDENT PHOTO</strong>
+          Save the official portrait as<br><code>assets/images/president.jpg</code>
+        </div>
+      </div>
+      <div class="president-info">
+        <div class="pi-role">ASSOCIATION PRESIDENT</div>
+       <h3>Dr. Sanjay Kanodia</h3>
+        <p class="pi-org">Deoria Taekwondo Association</p>
+        <p>The President represents Deoria Taekwondo Association and supports the academy’s training, discipline, and championship pathway at Ravindra Kishor Shahi Sports Stadium, Deoria.</p>
+      </div>
+    </div>
+    <div class="coach-content reveal-right">
+      <h3>ASSOCIATION LEADERSHIP</h3>
+      <h2>President</h2>
+      <div class="red-line"></div>
+      <p>Working with the coaching staff to guide the association, welcome new students, and uphold the standards of modern-style Taekwondo.</p>
+      <div class="coach-badges">
+        <div class="coach-badge">🥋 Association Leadership</div>
+        <div class="coach-badge">🏅 Athlete Development</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
 <!-- 3D GALLERY -->
 <section class="gallery reveal" id="gallery">
-  <div class="gallery section-head">
+  <div class="section-head">
     <div class="section-title">
       <div class="section-label"><i class="fas fa-images"></i> Visual Journey</div>
       <h2>Training <span>Gallery</span></h2>
@@ -1301,7 +1434,20 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     <h2>Latest <span>News</span></h2>
     <div class="red-line"></div>
   </div>
-  <div class="news-grid" id="newsGrid"></div>
+  <div class="news-grid" id="newsGrid">
+    <article class="news-card">
+      <h3>Training continues at Ravindra Kishor Shahi Sports Stadium, Deoria.</h3>
+      <span><i class="fas fa-location-dot"></i> Training update</span>
+    </article>
+    <article class="news-card">
+      <h3>Athletes prepare for district, state and national championships under Coach Girish Singh.</h3>
+      <span><i class="fas fa-trophy"></i> Competition</span>
+    </article>
+    <article class="news-card">
+      <h3>New students welcome — Kyorugi, Poomsae, fitness and self-defense batches are open.</h3>
+      <span><i class="fas fa-user-plus"></i> Join us</span>
+    </article>
+  </div>
 </div>
 </section>
 
@@ -1393,19 +1539,34 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   </div>
   <div class="affil-grid">
     <a href="https://www.uptaekwondo.com/" target="_blank" rel="noopener" class="affil-card">
-      <div class="affil-icon"><i class="fas fa-map-marked-alt"></i></div>
+  <div class="affil-icon">
+    <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790488849/UP_tkd_logo_zyht3u.png"
+         alt="UP Taekwondo Association official logo"
+         width="110"
+         height="110">
+  </div>
       <h4>UP Taekwondo Association</h4>
       <p>State governing body developing and promoting Taekwondo across Uttar Pradesh.</p>
       <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
     </a>
-    <a href="https://www.indiataekwondo.com/" target="_blank" rel="noopener" class="affil-card">
-      <div class="affil-icon"><i class="fas fa-flag"></i></div>
+   <a href="https://www.indiataekwondo.com/" target="_blank" rel="noopener" class="affil-card">
+  <div class="affil-icon">
+    <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790489123/india_tkd_logo_hm0cuo.png"
+         alt="India Taekwondo official logo"
+         width="110"
+         height="110">
+  </div>
       <h4>India Taekwondo</h4>
       <p>National governing body for Taekwondo in India, recognized by the Ministry of Youth Affairs &amp; Sports.</p>
       <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
     </a>
     <a href="https://www.worldtaekwondo.org/" target="_blank" rel="noopener" class="affil-card">
-      <div class="affil-icon"><i class="fas fa-globe"></i></div>
+  <div class="affil-icon">
+    <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790488370/world_tkd_logo_rjbwt2.png"
+         alt="World Taekwondo logo"
+         width="110"
+         height="110">
+  </div>
       <h4>World Taekwondo</h4>
       <p>The international federation governing Olympic Taekwondo worldwide.</p>
       <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
@@ -1423,16 +1584,16 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     <div class="red-line"></div>
     <p>Training happens at Ravindra Kishor Shahi Sports Stadium, Deoria. Tap the map to get directions.</p>
   </div>
-  <a class="map-wrap" href="https://www.google.com/maps/dir/?api=1&destination=Ravindra+Kishor+Shahi+Sports+Stadium,+Deoria,+Uttar+Pradesh" target="_blank" rel="noopener" style="display:block;text-decoration:none;">
+  <div class="map-wrap">
     <iframe src="https://www.google.com/maps?q=Ravindra+Kishor+Shahi+Sports+Stadium,+Deoria,+Uttar+Pradesh&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ravindra Kishor Shahi Sports Stadium, Deoria — Map"></iframe>
-    <div class="map-overlay-link">
+    <a class="map-overlay-link" href="https://www.google.com/maps/dir/?api=1&destination=Ravindra+Kishor+Shahi+Sports+Stadium,+Deoria,+Uttar+Pradesh" target="_blank" rel="noopener">
       <div class="moi"><i class="fas fa-location-dot"></i></div>
       <div>
         <h4>Ravindra Kishor Shahi Sports Stadium</h4>
         <span>Tap for Directions <i class="fas fa-diamond-turn-right"></i></span>
       </div>
-    </div>
-  </a>
+    </a>
+  </div>
 </div>
 </section>
 
@@ -1448,15 +1609,15 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     <div class="contact-form">
       <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:10px;">GET IN TOUCH</h3>
       <p style="color:var(--muted);margin-bottom:28px;">Feel free to reach out to us through any of the platforms below.</p>
-      <a href="https://wa.me/918318066739" class="social-card">
+      <a href="https://wa.me/918318066739" class="social-card" target="_blank" rel="noopener">
         <div class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></div>
         <div class="social-info"><span>WHATSAPP</span><h4>+91 83180 66739</h4></div>
       </a>
-      <a href="https://www.instagram.com/girishsingh129?igsh=ZTFkZmFocnViMnEz" class="social-card">
+      <a href="https://www.instagram.com/girishsingh129?igsh=ZTFkZmFocnViMnEz" class="social-card" target="_blank" rel="noopener">
         <div class="social-icon instagram"><i class="fab fa-instagram"></i></div>
-        <div class="social-info"><span>INSTAGRAM</span><h4>@deoria_taekwondo</h4></div>
+        <div class="social-info"><span>INSTAGRAM</span><h4>@girishsingh129</h4></div>
       </a>
-      <a href="https://www.facebook.com/share/1Craowrqsz/" class="social-card">
+      <a href="https://www.facebook.com/share/1Craowrqsz/" class="social-card" target="_blank" rel="noopener">
         <div class="social-icon facebook"><i class="fab fa-facebook-f"></i></div>
         <div class="social-info"><span>FACEBOOK</span><h4>Deoria Taekwondo Association</h4></div>
       </a>
@@ -1477,11 +1638,11 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
       </div>
       <div class="contact-box">
         <div class="cbox-icon"><i class="fas fa-phone"></i></div>
-        <div class="cbox-text"><h4>Phone</h4><p>+91 83180 66739</p></div>
+        <div class="cbox-text"><h4>Phone</h4><p><a href="tel:+918318066739" style="color:inherit;text-decoration:none;">+91 83180 66739</a></p></div>
       </div>
       <div class="contact-box">
         <div class="cbox-icon"><i class="fas fa-envelope"></i></div>
-        <div class="cbox-text"><h4>Email</h4><p>deoriataekwondo@gmail.com</p></div>
+        <div class="cbox-text"><h4>Email</h4><p><a href="mailto:deoriataekwondo@gmail.com" style="color:inherit;text-decoration:none;">deoriataekwondo@gmail.com</a></p></div>
       </div>
       <div class="contact-box">
         <div class="cbox-icon"><i class="fas fa-clock"></i></div>
@@ -1499,14 +1660,22 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
       <h2>🥋 Deoria Taekwondo</h2>
       <div class="red-line" style="margin-top:0;"></div>
       <p>Official Association at Ravindra Kishore Shahi Sports Stadium, Deoria — building champions with discipline, strength, and heart.</p>
+      <div class="footer-socials">
+        <a class="footer-social" href="https://wa.me/918318066739" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a class="footer-social" href="https://www.instagram.com/girishsingh129?igsh=ZTFkZmFocnViMnEz" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a class="footer-social" href="https://www.facebook.com/share/1Craowrqsz/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a class="footer-social" href="tel:+918318066739" aria-label="Call"><i class="fas fa-phone"></i></a>
+      </div>
     </div>
     <div class="footer-col">
       <h4>Quick Links</h4>
       <a href="#home">Home</a>
       <a href="#about">About</a>
       <a href="#coach">Our Coach</a>
+      <a href="#president">President</a>
       <a href="#programs">Programs</a>
       <a href="gallery.html">Gallery</a>
+      <a href="videos.html">Videos</a>
       <a href="#contact">Contact</a>
     </div>
     <div class="footer-col">
@@ -1524,9 +1693,14 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   </div>
 </footer>
 
+<div class="img-lightbox" id="imgLightbox" aria-hidden="true">
+  <button type="button" class="img-lightbox-close" id="imgLightboxClose" aria-label="Close image">&times;</button>
+  <img id="imgLightboxPhoto" alt="Enlarged gallery photo">
+</div>
+
 <div class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></div>
 
-<div class="chat-fab" id="chatFab">
+<div class="chat-fab" id="chatFab" role="button" tabindex="0" aria-label="Open Coach AI chat">
   <span class="fab-icon">🥋</span>
   <div class="fab-notif">AI</div>
   <div class="fab-tip">Ask Coach AI 💬</div>
@@ -1542,7 +1716,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     <div class="cp-info"><h4>COACH AI</h4><span>DEORIA TAEKWONDO</span></div>
     <div class="cp-actions">
       <button class="cp-lang-btn" id="cpLangBtn">🇮🇳 Hinglish <i class="fas fa-sync-alt" style="font-size:8px;margin-left:2px;"></i></button>
-      <div class="cp-close" id="cpClose"><i class="fas fa-times"></i></div>
+      <button type="button" class="cp-close" id="cpClose" aria-label="Close chat"><i class="fas fa-times"></i></button>
     </div>
   </div>
   <div class="cp-messages" id="cpMessages"></div>
@@ -1562,6 +1736,14 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   if(!slideshow) return;
 
   const slides    = Array.from(slideshow.querySelectorAll('.about-slide'));
+  slides.forEach((slide) => {
+    const cap = slide.querySelector('.slide-caption');
+    if (!cap) return;
+    const tag = cap.querySelector('span');
+    const title = cap.querySelector('h4');
+    if (tag) tag.textContent = slide.dataset.sub || '';
+    if (title) title.textContent = slide.dataset.label || '';
+  });
   const dotsWrap  = document.getElementById('slideDots');
   const counter   = document.getElementById('slideCounter');
   const btnPrev   = document.getElementById('slidePrev');
@@ -1771,19 +1953,21 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 
 // Close menu when clicking outside it
 document.addEventListener("click", (e) => {
-
+    const nav = document.getElementById('navLinks');
+    const btn = document.getElementById('menuBtn');
+    if (!nav || !btn) return;
     if (
-        navLinks.classList.contains("active") &&
-        !navLinks.contains(e.target) &&
-        !menuBtn.contains(e.target)
+        nav.classList.contains("active") &&
+        !nav.contains(e.target) &&
+        !btn.contains(e.target)
     ) {
-        navLinks.classList.remove("active");
+        nav.classList.remove("active");
+        btn.setAttribute('aria-expanded', 'false');
     }
-
 });
 </script>
 
-<script type="module" src="assets/js/firebase-app.js"></script>
+
 <script src="assets/js/ui.js"></script>
 <script src="assets/js/chatbot.js"></script>
 
