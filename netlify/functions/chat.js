@@ -22,11 +22,16 @@ function buildSystemPrompt(lang) {
   if (lang === 'hinglish') {
     return `Tu ek expert Taekwondo coach AI hai "Coach AI" — ${Association_INFO} ka official virtual assistant. ` +
       `SIRF Taekwondo, sports fitness, diet, injury, belt grading, rules aur events ke baare mein jawab de. ` +
-      `Off-topic pe bol: "Main sirf Taekwondo aur sports coach hoon 🥋" Hinglish mein baat kar, casual aur motivational tone. 150-600 words max.`;
+      `Chot ka diagnosis ya treatment, return-to-training clearance, weight-cutting, supplements ya personalized diet advice mat dena. ` +
+      `Chot par training rokne, parent/guardian ko batane aur qualified doctor/physio se salah lene ko kehna; emergency symptoms par turant emergency care lene ko kehna. ` +
+      `Personal details mat maangna. Off-topic pe bol: "Main sirf Taekwondo aur sports coach hoon 🥋" ` +
+      `Hinglish mein casual aur motivating tone mein, concise aur practical jawab de.`;
   }
   return `You are "Coach AI" — expert Taekwondo & sports coach for ${Association_INFO}. ` +
     `ONLY answer about Taekwondo, sports fitness, athlete nutrition, injury prevention, belt grading, rules, competitions. ` +
-    `Refuse off-topic politely. Professional, motivating tone. 150-600 words max.`;
+    `Do not diagnose or treat injuries, clear anyone to return to training, or give personalized diet, supplement, or weight-cutting advice. ` +
+    `For injuries, advise stopping the activity, telling a parent/guardian when appropriate, and consulting a qualified clinician; direct urgent symptoms to emergency care. ` +
+    `Do not ask for personal details. Refuse off-topic requests politely. Keep replies concise, practical, and professional.`;
 }
 
 
@@ -95,8 +100,6 @@ async function askOpenRouter(lang, history) {
                 Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
                 "Content-Type": "application/json",
 
-                // Optional but recommended
-                "HTTP-Referer": "https://YOUR_NETLIFY_SITE.netlify.app",
                 "X-Title": "Deoria Taekwondo Chatbot"
             },
             body: JSON.stringify({
@@ -121,34 +124,54 @@ async function askOpenRouter(lang, history) {
     return data.choices[0].message.content;
 }
 exports.handler = async (event) => {
+  const jsonHeaders = { 'Content-Type': 'application/json; charset=utf-8' };
   // Only allow POST requests (visitor sending a chat message)
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return { statusCode: 405, headers: { ...jsonHeaders, Allow: 'POST' }, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  // The secret key lives ONLY here, set in Netlify's dashboard environment variables.
- const geminiKey = process.env.GEMINI_API_KEY;
-const groqKey = process.env.GROQ_API_KEY;
-const openrouterKey = process.env.OPENROUTER_API_KEY;
-
-if (!geminiKey && !groqKey && !openrouterKey) {
-  return {
-    statusCode: 500,
-    body: JSON.stringify({
-      error: "No AI API keys configured."
-    })
-  };
-}
-
   try {
-    const { lang, history } = JSON.parse(event.body || '{}');
+    const body = event.body || '';
+    if (Buffer.byteLength(body, 'utf8') > 20_000) {
+      return { statusCode: 413, headers: jsonHeaders, body: JSON.stringify({ error: 'Message is too long. Please shorten it and try again.' }) };
+    }
 
-    // Basic safety: don't let an empty or huge request through
+    let payload;
+    try {
+      payload = JSON.parse(body || '{}');
+    } catch {
+      return { statusCode: 400, headers: jsonHeaders, body: JSON.stringify({ error: 'Invalid request.' }) };
+    }
+
+    const { lang, history } = payload || {};
     if (!Array.isArray(history) || history.length === 0) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'No message provided.' }) };
+      return { statusCode: 400, headers: jsonHeaders, body: JSON.stringify({ error: 'No message provided.' }) };
     }
     if (history.length > 40) {
-      return { statusCode: 400, body: JSON.stringify({ error: 'Conversation too long, please refresh the chat.' }) };
+      return { statusCode: 400, headers: jsonHeaders, body: JSON.stringify({ error: 'Conversation too long, please refresh the chat.' }) };
+    }
+
+    let totalChars = 0;
+    for (const item of history) {
+      const text = item?.parts?.[0]?.text;
+      if (!item || !['user', 'model'].includes(item.role) || typeof text !== 'string' || !text.trim()) {
+        return { statusCode: 400, headers: jsonHeaders, body: JSON.stringify({ error: 'Invalid conversation format.' }) };
+      }
+      if (text.length > 4_000) {
+        return { statusCode: 413, headers: jsonHeaders, body: JSON.stringify({ error: 'A message in this conversation is too long.' }) };
+      }
+      totalChars += text.length;
+    }
+    if (totalChars > 12_000 || history[history.length - 1].role !== 'user') {
+      return { statusCode: 400, headers: jsonHeaders, body: JSON.stringify({ error: 'Conversation is too long or incomplete. Please start a new chat.' }) };
+    }
+
+    // Provider keys stay in Netlify environment variables and never enter the page.
+    const geminiKey = process.env.GEMINI_API_KEY;
+    const groqKey = process.env.GROQ_API_KEY;
+    const openrouterKey = process.env.OPENROUTER_API_KEY;
+    if (!geminiKey && !groqKey && !openrouterKey) {
+      return { statusCode: 503, headers: jsonHeaders, body: JSON.stringify({ error: 'Coach AI is temporarily unavailable. Please try again later.' }) };
     }
 
     const safeLang = lang === 'hinglish' ? 'hinglish' : 'english';
@@ -174,36 +197,39 @@ if (!geminiKey && !groqKey && !openrouterKey) {
       const reply = await tryGemini();
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: jsonHeaders,
         body: JSON.stringify({ reply })
       };
     } catch (e) {
-      console.log('Gemini failed');
+      console.log('Gemini provider unavailable or request failed');
       try {
+        if (!groqKey) throw new Error('Groq is not configured');
         const groqReply = await askGroq(safeLang, history);
         return {
           statusCode: 200,
-          headers: { 'Content-Type': 'application/json' },
+          headers: jsonHeaders,
           body: JSON.stringify({ reply: groqReply })
         };
       } catch {
-        console.log('Groq failed');
+        console.log('Groq provider unavailable or request failed');
         try {
+          if (!openrouterKey) throw new Error('OpenRouter is not configured');
           const openRouterReply = await askOpenRouter(safeLang, history);
           return {
             statusCode: 200,
-            headers: { 'Content-Type': 'application/json' },
+            headers: jsonHeaders,
             body: JSON.stringify({ reply: openRouterReply })
           };
         } catch {
           return {
             statusCode: 502,
-            body: JSON.stringify({ error: 'Gemini, Groq and OpenRouter all failed.' })
+            headers: jsonHeaders,
+            body: JSON.stringify({ error: 'Coach AI is temporarily unavailable. Please try again later.' })
           };
         }
       }
     }
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'Unexpected server error.' }) };
+    return { statusCode: 500, headers: jsonHeaders, body: JSON.stringify({ error: 'Unexpected server error.' }) };
   }
 };

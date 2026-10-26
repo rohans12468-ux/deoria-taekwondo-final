@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery | Deoria Taekwondo Association</title>
-<meta name="description" content="Training photos from Deoria Taekwondo Association — sessions, championships and academy life.">
+<meta name="description" content="Photos from Deoria Taekwondo Association — training sessions, championships and association life.">
 <link rel="icon" type="image/png" href="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782634605/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9_ptiuvb.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -503,8 +503,11 @@ html, body {
 
 }
 </style>
+<link rel="stylesheet" href="assets/css/site-polish.css">
 </head>
 <body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- HEADER -->
 <header>
@@ -520,14 +523,14 @@ html, body {
 </header>
 
 <!-- HERO -->
-<section class="gallery-hero">
+<section class="gallery-hero" id="main-content">
     <h1>Training <span>Gallery</span></h1>
-    <p>Explore moments from training sessions, championships, medal ceremonies and academy activities.</p>
+    <p>Explore moments from training sessions, championships, medal ceremonies and association events.</p>
 </section>
 
 <!-- Gallery Category Buttons -->
 <div class="gallery-buttons">
-    <a href="gallery.html" class="gallery-btn active">Academy Photos</a>
+    <a href="gallery.html" class="gallery-btn active">Photos</a>
     <a href="poomsae.html" class="gallery-btn">Poomsae Event</a>
     <a href="other.html" class="gallery-btn">Other Photos</a>
 </div>
@@ -538,24 +541,25 @@ html, body {
 </section>
  
 <!-- LIGHTBOX -->
-<div class="popup" id="popup">
-    <span class="close-btn" id="closeBtn">&times;</span>
-    <button class="nav-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+<div class="popup" id="popup" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true" tabindex="-1">
+    <button type="button" class="close-btn" id="closeBtn" aria-label="Close photo viewer">&times;</button>
+    <button type="button" class="viewer-fullscreen" id="fullscreenBtn" aria-label="Enter full screen" title="Enter full screen"><i class="fas fa-expand" aria-hidden="true"></i></button>
+    <button type="button" class="nav-btn prev" id="prevBtn" aria-label="Previous photo"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
     <div class="popup-inner">
         <img src="" id="popupImg" alt="Gallery Image">
     </div>
-    <button class="nav-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    <button type="button" class="nav-btn next" id="nextBtn" aria-label="Next photo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
     <div class="img-counter" id="imgCounter">1 / 22</div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-    <p>Deoria Taekwondo Association © 2026</p>
+    <p>© 2026 Deoria Taekwondo Association. All rights reserved.</p>
 </footer>
 
 
 <!-- Scroll To Top Button -->
-<button id="scrollTopBtn" class="scroll-top-btn">
+<button id="scrollTopBtn" class="scroll-top-btn" type="button" aria-label="Back to top">
     <i class="fas fa-arrow-up"></i>
 </button>
 

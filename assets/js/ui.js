@@ -4,6 +4,10 @@
    ════════════════════════════════════════════════════════════ */
 
 /* ---------- 1. CUSTOM CURSOR (optional — only if markup exists) ---------- */
+const motionPreference = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+const heroVideo = document.querySelector('.hero video');
+if (motionPreference?.matches && heroVideo) heroVideo.pause();
+
 const cursorDot = document.getElementById('cursorDot');
 const cursorRing = document.getElementById('cursorRing');
 
@@ -46,13 +50,28 @@ if (menuBtn && navLinks) {
   menuBtn.addEventListener('click', () => {
     const open = navLinks.classList.toggle('active');
     menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    const icon = menuBtn.querySelector('i');
+    if (icon) icon.className = open ? 'fas fa-times' : 'fas fa-bars';
   });
   document.querySelectorAll('.nav-links a').forEach((link) =>
     link.addEventListener('click', () => {
       navLinks.classList.remove('active');
       menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'Open menu');
+      const icon = menuBtn.querySelector('i');
+      if (icon) icon.className = 'fas fa-bars';
     })
   );
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || !navLinks.classList.contains('active')) return;
+    navLinks.classList.remove('active');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Open menu');
+    const icon = menuBtn.querySelector('i');
+    if (icon) icon.className = 'fas fa-bars';
+    menuBtn.focus();
+  });
 }
 
 /* ---------- 4. "BACK TO TOP" BUTTON ---------- */
@@ -63,15 +82,20 @@ if (scrollTopBtn) {
 }
 
 /* ---------- 5. FADE-IN ANIMATIONS WHEN SCROLLING DOWN ---------- */
-const revealObserver = new IntersectionObserver(
-  (entries) => {
+const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+if ('IntersectionObserver' in window) {
+  const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
     });
-  },
-  { threshold: 0.12 }
-);
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el) => revealObserver.observe(el));
+  }, { threshold: 0.12 });
+  revealElements.forEach((el) => revealObserver.observe(el));
+} else {
+  revealElements.forEach((el) => el.classList.add('visible'));
+}
 
 /* ════════════════════════════════════════════════════════════
    6. 3D PHOTO GALLERY (the spinning carousel on the homepage)
@@ -80,9 +104,9 @@ const GALLERY_IMGS = [
   { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/Priyankatkd.jpeg', label: 'Sparring Session', sub: 'Kyorugi Training' },
   { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/WhatsApp%20Image%202025-11-22%20at%2014.58.19_c498ec69.jpg', label: 'Forms Practice', sub: 'Poomsae Discipline' },
   { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/harsh%20tkd.PNG', label: 'Championship Ready', sub: 'Competition Prep' },
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/abhiskek%20tkd.jpeg', label: 'Academy Training', sub: 'Daily Workout' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/abhiskek%20tkd.jpeg', label: 'Taekwondo Training', sub: 'Daily Workout' },
   { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/mithun%20tkd.jpeg', label: 'Team Practice', sub: 'Group Training' },
-  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/madhav.jpg', label: 'Our Champions', sub: 'Deoria Academy' },
+  { src: 'https://raw.githubusercontent.com/RohanTkd-ux/web-Photos/refs/heads/main/madhav.jpg', label: 'Our Champions', sub: 'Deoria Taekwondo' },
 ];
 
 const track = document.getElementById('galleryTrack');
@@ -94,11 +118,13 @@ const galleryNext = document.getElementById('galleryNext');
 if (track && dotsContainer && galleryWrap && galleryPrev && galleryNext) {
   const totalSlides = GALLERY_IMGS.length;
   let currentIdx = 0;
-  let autoTimer;
 
   GALLERY_IMGS.forEach((img, i) => {
     const slide = document.createElement('div');
     slide.className = 'gallery-3d-slide';
+    slide.setAttribute('role', 'button');
+    slide.setAttribute('tabindex', '0');
+    slide.setAttribute('aria-label', 'View ' + img.label);
     slide.innerHTML = `
       <img src="${img.src}" alt="${img.label}" loading="lazy">
       <div class="slide-label">
@@ -107,7 +133,17 @@ if (track && dotsContainer && galleryWrap && galleryPrev && galleryNext) {
       </div>`;
     slide.addEventListener('click', () => {
       if (currentIdx === i) {
-        openHomeLightbox(img.src, img.label);
+        openHomeLightbox(img.src, img.label, slide);
+        return;
+      }
+      currentIdx = i;
+      renderGallery();
+    });
+    slide.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      if (currentIdx === i) {
+        openHomeLightbox(img.src, img.label, slide);
         return;
       }
       currentIdx = i;
@@ -119,6 +155,7 @@ if (track && dotsContainer && galleryWrap && galleryPrev && galleryNext) {
     dot.type = 'button';
     dot.className = 'gallery-dot';
     dot.setAttribute('aria-label', 'Show photo ' + (i + 1));
+    dot.setAttribute('aria-pressed', 'false');
     dot.addEventListener('click', () => {
       currentIdx = i;
       renderGallery();
@@ -153,13 +190,17 @@ if (track && dotsContainer && galleryWrap && galleryPrev && galleryNext) {
 
       slide.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotY}deg) scale(${scale})`;
       slide.style.opacity = opacity;
+      slide.tabIndex = opacity === 0 ? -1 : 0;
+      slide.setAttribute('aria-hidden', opacity === 0 ? 'true' : 'false');
       slide.style.filter = `blur(${blur}px) brightness(${i === currentIdx ? 1 : 0.6})`;
       slide.style.zIndex = i === currentIdx ? 5 : 1;
       slide.style.border = i === currentIdx ? '1px solid rgba(240,180,41,0.4)' : '1px solid rgba(255,255,255,0.07)';
     });
 
-    dots.forEach((d, i) => d.classList.toggle('active', i === currentIdx));
-    resetAutoPlay();
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === currentIdx);
+      d.setAttribute('aria-pressed', i === currentIdx ? 'true' : 'false');
+    });
   }
 
   function showPrevSlide() {
@@ -181,11 +222,6 @@ if (track && dotsContainer && galleryWrap && galleryPrev && galleryNext) {
     if (Math.abs(diff) > 50) { diff > 0 ? showNextSlide() : showPrevSlide(); }
   });
 
-  function resetAutoPlay() {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(showNextSlide, 4000);
-  }
-
   renderGallery();
   window.addEventListener('resize', renderGallery);
 }
@@ -194,14 +230,17 @@ if (track && dotsContainer && galleryWrap && galleryPrev && galleryNext) {
 const homeLightbox = document.getElementById('imgLightbox');
 const homeLightboxImg = document.getElementById('imgLightboxPhoto');
 const homeLightboxClose = document.getElementById('imgLightboxClose');
+let homeLightboxTrigger = null;
 
-function openHomeLightbox(src, label) {
+function openHomeLightbox(src, label, trigger = document.activeElement) {
   if (!homeLightbox || !homeLightboxImg) return;
+  homeLightboxTrigger = trigger;
   homeLightboxImg.src = src;
   homeLightboxImg.alt = label || 'Gallery photo';
   homeLightbox.classList.add('active');
   homeLightbox.setAttribute('aria-hidden', 'false');
   document.body.classList.add('lightbox-open');
+  if (homeLightboxClose) homeLightboxClose.focus();
 }
 
 function closeHomeLightbox() {
@@ -209,6 +248,7 @@ function closeHomeLightbox() {
   homeLightbox.classList.remove('active');
   homeLightbox.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('lightbox-open');
+  if (homeLightboxTrigger && typeof homeLightboxTrigger.focus === 'function') homeLightboxTrigger.focus();
 }
 
 if (homeLightbox) {
@@ -217,6 +257,11 @@ if (homeLightbox) {
     if (e.target === homeLightbox) closeHomeLightbox();
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && homeLightbox.classList.contains('active')) closeHomeLightbox();
+    if (!homeLightbox.classList.contains('active')) return;
+    if (e.key === 'Escape') closeHomeLightbox();
+    if (e.key === 'Tab' && document.activeElement === homeLightboxClose) {
+      e.preventDefault();
+      homeLightboxClose.focus();
+    }
   });
 }

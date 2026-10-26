@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Videos | Deoria Taekwondo Association</title>
-<meta name="description" content="Watch training sessions, competition highlights and academy videos from Deoria Taekwondo Association."/>
+<meta name="description" content="Watch training sessions, competition highlights and videos from Deoria Taekwondo Association."/>
 <link rel="icon" type="image/png" href="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782634605/a56c0ac4-a6a0-4b51-a197-9ccc21ee9bd9_ptiuvb.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -87,8 +87,11 @@ footer span{color:var(--red);}
 .video-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));}
 html,body{width:100%;max-width:100%;overflow-x:hidden;}
 </style>
+<link rel="stylesheet" href="assets/css/site-polish.css">
 </head>
 <body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- HEADER -->
 <header>
@@ -105,20 +108,20 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 </header>
 
 <!-- HERO -->
-<section class="videos-hero">
+<section class="videos-hero" id="main-content">
   <div class="section-label"><i class="fab fa-youtube"></i> &nbsp; Video Gallery</div>
   <h1>Our <span>Videos</span></h1>
   <div class="red-line"></div>
-  <p>Training sessions, championship highlights, belt ceremonies and more — straight from the academy floor.</p>
+  <p>Training sessions, championship highlights, belt ceremonies and more — straight from the dojang.</p>
 </section>
 
 <!-- CATEGORY TABS -->
 <div class="video-tabs">
-  <button type="button" class="vtab active" data-cat="all"><i class="fas fa-th"></i> All Videos</button>
-  <button type="button" class="vtab" data-cat="training"><i class="fas fa-fist-raised"></i> Training</button>
-  <button type="button" class="vtab" data-cat="competition"><i class="fas fa-trophy"></i> Competitions</button>
-  <button type="button" class="vtab" data-cat="ceremony"><i class="fas fa-medal"></i> Ceremonies</button>
-  <button type="button" class="vtab" data-cat="camp"><i class="fas fa-campground"></i> Camps</button>
+  <button type="button" class="vtab active" data-cat="all" aria-pressed="true"><i class="fas fa-th" aria-hidden="true"></i> All Videos</button>
+  <button type="button" class="vtab" data-cat="training" aria-pressed="false"><i class="fas fa-fist-raised" aria-hidden="true"></i> Training</button>
+  <button type="button" class="vtab" data-cat="competition" aria-pressed="false"><i class="fas fa-trophy" aria-hidden="true"></i> Competitions</button>
+  <button type="button" class="vtab" data-cat="ceremony" aria-pressed="false"><i class="fas fa-medal" aria-hidden="true"></i> Ceremonies</button>
+  <button type="button" class="vtab" data-cat="camp" aria-pressed="false"><i class="fas fa-campground" aria-hidden="true"></i> Camps</button>
 </div>
 
 <!-- VIDEO GRID -->
@@ -130,7 +133,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2026 Deoria Taekwondo Academy — Designed with ❤️</p>
+  <p>© 2026 Deoria Taekwondo Association. All rights reserved.</p>
   <span>🥋 Train · Compete · Champion</span>
 </footer>
 
@@ -147,37 +150,37 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 */
 const VIDEOS = [
   {
-    id: 'https://youtu.be/hJRttnp64LA?si=mP0pK6YLSkBQ-15Q',          // ← REPLACE with your real YouTube video ID
+    id: 'https://youtu.be/hJRttnp64LA?si=mP0pK6YLSkBQ-15Q',
     title: 'Kyorugi Sparring Session — Advanced Training',
     desc:  'High-intensity sparring drill with footwork and counter-attack combinations.',
     cat:   'training'
   },
   {
-    id: 'https://youtu.be/I0KGWROTB_Y?si=VehugEEzZIzoyze5',          // ← REPLACE with your real YouTube video ID
+    id: 'https://youtu.be/I0KGWROTB_Y?si=VehugEEzZIzoyze5',
     title: 'District Championship 2024 — Highlight Reel',
     desc:  'Best moments from our athletes competing at the district level.',
     cat:   'competition'
   },
   {
-    id: 'https://youtu.be/h6mc1cjHSnk?si=00mK_ESJ25CoQS4t',          // ← REPLACE with your real YouTube video ID
-    title: 'fight — Junior Batch',
-    desc:  'Students receiving their new belts after months of dedicated training.',
+    id: 'https://youtu.be/h6mc1cjHSnk?si=00mK_ESJ25CoQS4t',
+    title: 'Junior Belt Ceremony',
+    desc:  'Students celebrating their progress and new belt promotions.',
     cat:   'ceremony'
   },
   {
-    id: 'https://youtu.be/DVtMGnXgbfA?si=adixSd-HHAQqkkNJ',          // ← REPLACE with your real YouTube video ID
+    id: 'https://youtu.be/DVtMGnXgbfA?si=adixSd-HHAQqkkNJ',
     title: 'Summer Training Camp 2024',
     desc:  'Highlights from our intensive 10-day summer camp at the stadium.',
     cat:   'camp'
   },
   {
-    id: 'dhttps://youtu.be/DRdV5KFvjRE?si=pZWeXrroyNBRVqoj',          // ← REPLACE with your real YouTube video ID
-    title: 'kyurogi — Senior Batch',
-    desc:  'Athletes performing kyurogi with precision and focus.',
+    id: 'https://youtu.be/DRdV5KFvjRE?si=pZWeXrroyNBRVqoj',
+    title: 'Kyorugi — Senior Batch',
+    desc:  'Athletes practicing Kyorugi with precision and focus.',
     cat:   'training'
   },
   {
-    id: 'https://youtu.be/iW4FQYlTPWo?si=VoBtbyI0jMocIwQy',          // ← REPLACE with your real YouTube video ID
+    id: 'https://youtu.be/iW4FQYlTPWo?si=VoBtbyI0jMocIwQy',
     title: 'State Championship 2023 — Gold Medal Bout',
     desc:  'Watch our student claim gold at the UP State Taekwondo Championship.',
     cat:   'competition'
@@ -199,8 +202,17 @@ const CATEGORY_LABELS = {
   camp:        'Camp'
 };
 
-let activeFilter = 'all';
+const requestedCategory = new URLSearchParams(window.location.search).get('category');
+let activeFilter = ['training', 'competition', 'ceremony', 'camp'].includes(requestedCategory) ? requestedCategory : 'all';
 const grid = document.getElementById('videoGrid');
+
+function syncCategoryTabs() {
+  document.querySelectorAll('.vtab').forEach(tab => {
+    const selected = tab.dataset.cat === activeFilter;
+    tab.classList.toggle('active', selected);
+    tab.setAttribute('aria-pressed', String(selected));
+  });
+}
 
 function renderVideos() {
   const filtered = activeFilter === 'all' ? VIDEOS : VIDEOS.filter(v => v.cat === activeFilter);
@@ -222,10 +234,11 @@ function renderVideos() {
     card.innerHTML = `
       <div class="yt-embed">
         <iframe
-          src="https://www.youtube.com/embed/${youtubeId(v.id)}?rel=0&modestbranding=1"
+          src="https://www.youtube-nocookie.com/embed/${youtubeId(v.id)}?rel=0&modestbranding=1"
           title="${v.title}"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
           loading="lazy">
         </iframe>
       </div>
@@ -241,13 +254,22 @@ function renderVideos() {
 // Tab switching
 document.querySelectorAll('.vtab').forEach(tab => {
   tab.addEventListener('click', () => {
-    document.querySelectorAll('.vtab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.vtab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-pressed', 'false');
+    });
     tab.classList.add('active');
+    tab.setAttribute('aria-pressed', 'true');
     activeFilter = tab.dataset.cat;
+    const url = new URL(window.location.href);
+    if (activeFilter === 'all') url.searchParams.delete('category');
+    else url.searchParams.set('category', activeFilter);
+    history.replaceState(null, '', url);
     renderVideos();
   });
 });
 
+syncCategoryTabs();
 renderVideos();
 </script>
 </body>

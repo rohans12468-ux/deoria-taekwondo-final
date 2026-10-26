@@ -31,19 +31,20 @@ const cbSend = document.getElementById('cbSend');
 
 if (fab && panel && msgs && cbInput && cbSend) {
 fab.addEventListener('click', () => togglePanel(true));
-fab.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    e.preventDefault();
-    togglePanel(!panelOpen);
-  }
+document.getElementById('cpClose').addEventListener('click', () => {
+  togglePanel(false);
+  fab.focus();
 });
-document.getElementById('cpClose').addEventListener('click', () => togglePanel(false));
+panel.inert = true;
 
 function togglePanel(open) {
   panelOpen = open;
   panel.classList.toggle('open', open);
+  panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+  panel.inert = !open;
   fab.style.animation = open ? 'none' : '';
   fab.setAttribute('aria-expanded', open ? 'true' : 'false');
+  fab.setAttribute('aria-label', open ? 'Close Coach AI chat' : 'Open Coach AI chat');
   if (window.innerWidth < 768) {
     document.body.classList.toggle('chat-open', open);
   } else {
@@ -90,10 +91,11 @@ function renderLangSelect() {
     <div class="ls-title">WELCOME TO COACH AI</div>
     <div class="ls-sub">Your personal Taekwondo & sports guide. Choose your language:</div>
     <div class="ls-options">
-      <div class="ls-opt" id="pickHinglish"><span class="lsflag">🇮🇳</span><span class="lsname">Hinglish</span><span class="lsdesc">Hindi + English</span></div>
-      <div class="ls-opt" id="pickEnglish"><span class="lsflag">🇬🇧</span><span class="lsname">English</span><span class="lsdesc">Full English</span></div>
+      <button type="button" class="ls-opt" id="pickHinglish"><span class="lsflag">🇮🇳</span><span class="lsname">Hinglish</span><span class="lsdesc">Hindi + English</span></button>
+      <button type="button" class="ls-opt" id="pickEnglish"><span class="lsflag">🇬🇧</span><span class="lsname">English</span><span class="lsdesc">Full English</span></button>
     </div>`;
   msgs.appendChild(screen);
+  document.getElementById('pickHinglish').focus();
  document.getElementById('pickHinglish').onclick = (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -121,8 +123,8 @@ function startChat(lang) {
   cbInput.focus();
   msgs.innerHTML = '';
   const welcome = lang === 'hinglish'
-    ? `<strong>Kem Cho Champion!</strong> 🥋 Main hoon <strong>Coach AI</strong> — Deoria Taekwondo Association ka virtual coach!<br><br>Taekwondo, diet, fitness, injuries, competitions — koi bhi sports sawaal poocho. <em>Let's train! 💪</em>`
-    : `<strong>Welcome, Champion!</strong> 🥋 I'm <strong>Coach AI</strong> — virtual coach of Deoria Taekwondo Association.<br><br>Ask me anything about Taekwondo, diet, fitness, injuries, competitions. <em>Let's train! 💪</em>`;
+    ? `<strong>Namaste, Champion!</strong> 🥋 Main hoon <strong>Coach AI</strong> — Deoria Taekwondo Association ka virtual assistant.<br><br>Technique, rules, training aur general fitness ke baare mein poocho. Chot ya personal medical advice ke liye qualified clinician se baat karo.`
+    : `<strong>Welcome!</strong> 🥋 I'm <strong>Coach AI</strong>, the virtual assistant for Deoria Taekwondo Association.<br><br>Ask about technique, rules, training and general fitness. For injuries or personal medical advice, speak with a qualified clinician.`;
   appendBotMsg(welcome);
   renderChips();
 }
@@ -191,6 +193,10 @@ function md2html(t) {
 
 /* ---------- Talks to OUR backend (not Google directly) ---------- */
 async function askCoachAI(userMsg) {
+  // Keep the latest context within the serverless function's request limits.
+  while (cbHistory.length >= 38) cbHistory.splice(0, 2);
+  const historyChars = () => cbHistory.reduce((total, item) => total + (item.parts?.[0]?.text.length || 0), 0);
+  while (cbHistory.length > 2 && historyChars() + userMsg.length > 10_000) cbHistory.splice(0, 2);
   cbHistory.push({ role: 'user', parts: [{ text: userMsg }] });
 
   const res = await fetch(CHAT_API_URL, {
@@ -234,7 +240,9 @@ async function handleSend(forcedText) {
     if (cbHistory.length % 6 === 0) renderChips();
   } catch (err) {
     removeTyping();
+    if (cbHistory[cbHistory.length - 1]?.role === 'user') cbHistory.pop();
     appendBotMsg(`❌ <em>${esc(err.message)}</em> — Please try again.`);
+    cbInput.value = text;
   } finally {
     cbBusy = false;
     cbSend.disabled = false;
@@ -258,6 +266,9 @@ document.addEventListener('click', (e) => {
   if (panelOpen && !panel.contains(e.target) && !fab.contains(e.target)) togglePanel(false);
 });
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && panelOpen) togglePanel(false);
+  if (e.key === 'Escape' && panelOpen) {
+    togglePanel(false);
+    fab.focus();
+  }
 });
 }

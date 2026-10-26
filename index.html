@@ -214,6 +214,9 @@ header.scrolled{background:rgba(7,9,26,0.95);}
   border:1px solid var(--glass-border);border-radius:8px;
   padding:12px 18px;
 }
+.hero-stat-link{color:inherit;text-decoration:none;transition:border-color .2s,background .2s;}
+.hero-stat-link:hover,.hero-stat-link:focus-visible{border-color:var(--gold);background:rgba(255,255,255,.08);outline:none;}
+.hero-stat-link:focus-visible{box-shadow:0 0 0 3px rgba(240,180,41,.35);}
 .hero-stat-pill h3{
   font-family:'Bebas Neue',sans-serif;font-size:28px;
   color:var(--gold);line-height:1;
@@ -229,13 +232,11 @@ header.scrolled{background:rgba(7,9,26,0.95);}
   border-bottom:1px solid rgba(255,255,255,0.1);
 }
 .ticker-track{
-  display:flex;gap:0;
-  animation:ticker 20s linear infinite;
-  white-space:nowrap;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:8px 0;
 }
 .ticker-item{
   display:inline-flex;align-items:center;gap:10px;
-  padding:0 40px;font-family:'Bebas Neue',sans-serif;
+  padding:0 28px;font-family:'Bebas Neue',sans-serif;
   font-size:15px;letter-spacing:2px;
 }
 .ticker-sep{color:rgba(255,255,255,0.4);font-size:20px;}
@@ -360,7 +361,7 @@ header.scrolled{background:rgba(7,9,26,0.95);}
   background:rgba(255,255,255,0.2);
   border-radius:99px;
   overflow:hidden;
-  cursor:pointer;
+  cursor:pointer;border:0;padding:0;
   transition:background 0.3s;
 }
 .slide-dot-v.active{background:rgba(240,180,41,0.4);}
@@ -373,7 +374,7 @@ header.scrolled{background:rgba(7,9,26,0.95);}
 }
 .slide-dot-v.active .dot-fill{
   height:100%;
-  transition:height 5.5s linear;
+  transition:height 8s linear;
 }
 
 /* Prev/next arrows on slideshow */
@@ -402,6 +403,7 @@ header.scrolled{background:rgba(7,9,26,0.95);}
   opacity:0;
 }
 .about-slideshow:hover .slide-arrow-btn{opacity:1;}
+.about-slideshow:focus-within .slide-arrow-btn{opacity:1;}
 .slide-arrow-btn:hover{background:var(--red);border-color:var(--red);color:#fff;}
 
 /* Slide counter chip */
@@ -722,6 +724,7 @@ header.scrolled{background:rgba(7,9,26,0.95);}
   background:var(--glass);border:1px solid var(--glass-border);
   border-radius:12px;padding:40px 30px;
   transition:.4s;position:relative;overflow:hidden;cursor:pointer;
+  display:block;width:100%;text-align:left;color:var(--white);font:inherit;
 }
 .program-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:2px;
@@ -961,12 +964,12 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
 
 /* Auto-appearing nudge bubble (one-time) */
 .fab-nudge{
-  position:absolute;right:70px;bottom:6px;
+  position:fixed;right:98px;bottom:34px;
   background:var(--navy2);border:1px solid rgba(240,180,41,0.35);
   color:#fff;font-family:'Poppins',sans-serif;font-size:12.5px;font-weight:500;
   padding:12px 16px;border-radius:12px;border-bottom-right-radius:3px;
   white-space:nowrap;box-shadow:0 15px 40px rgba(0,0,0,0.5);
-  opacity:0;transform:translateY(8px) scale(0.94);pointer-events:none;
+  opacity:0;transform:translateY(8px) scale(0.94);pointer-events:none;z-index:9996;
   transition:opacity .4s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
 }
 .fab-nudge.show{opacity:1;transform:translateY(0) scale(1);pointer-events:all;}
@@ -979,10 +982,10 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
 .fab-nudge .fn-close{
   position:absolute;top:-8px;left:-8px;width:20px;height:20px;background:var(--cb-red);
   border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;cursor:pointer;
-  border:2px solid var(--navy);
+  border:2px solid var(--navy);padding:0;color:#fff;line-height:1;
 }
 @media(max-width:600px){
-  .fab-nudge{right:66px;font-size:11.5px;padding:10px 14px;max-width:180px;white-space:normal;}
+  .fab-nudge{right:72px;bottom:22px;font-size:11.5px;padding:10px 14px;max-width:180px;white-space:normal;}
 }
 
 .chat-panel{position:fixed;bottom:100px;right:28px;width:380px;height:580px;background:var(--cb-bg);border-radius:20px;border:1px solid var(--cb-border);box-shadow:0 30px 80px rgba(0,0,0,0.7);display:flex;flex-direction:column;z-index:9997;overflow:hidden;transform:translateY(20px) scale(0.96);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.34,1.56,.64,1);}
@@ -1047,7 +1050,7 @@ footer{background:var(--navy);border-top:1px solid var(--glass-border);padding:6
 .cb-send{width:34px;height:34px;background:var(--cb-red);border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:13px;transition:.25s;flex-shrink:0;}
 .cb-send:hover{background:var(--cb-red-d);}
 .cb-send:disabled{background:#1f2937;cursor:not-allowed;}
-.cp-hint{text-align:center;font-size:10px;color:var(--cb-text);margin-top:6px;opacity:.4;letter-spacing:.5px;font-family:'Poppins',sans-serif;}
+.cp-hint{text-align:center;font-size:10px;color:var(--cb-text);margin:6px auto 0;max-width:320px;opacity:.78;letter-spacing:0;line-height:1.45;font-family:'Poppins',sans-serif;}
 
 /* ═══ IMAGE LIGHTBOX ═══ */
 .img-lightbox{
@@ -1132,7 +1135,7 @@ img,video,iframe{max-width:100%;}
   .map-overlay-link{max-width:calc(100% - 24px);}
   .btn-gallery-highlight{padding:16px 22px;font-size:13px;max-width:100%;}
   .gallery-cta-wrap{padding:0 5% 40px;margin-top:24px;}
-  body.chat-open .chat-fab,body.chat-open .scroll-top{visibility:hidden;pointer-events:none;}
+  body.chat-open .chat-fab,body.chat-open .scroll-top,body.chat-open .fab-nudge{visibility:hidden;pointer-events:none;}
   .about-img-badge{padding:14px 16px;}
   .about-img-badge h3{font-size:32px;}
 }
@@ -1155,10 +1158,12 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 .gallery-3d-wrap{overflow:hidden;touch-action:pan-y;}
 .gallery-3d-track{touch-action:pan-y;}
 </style>
+<link rel="stylesheet" href="assets/css/site-polish.css">
 </head>
 <body>
 
 
+<a class="skip-link" href="#home">Skip to content</a>
 
 <header id="header">
 <div class="navbar">
@@ -1169,12 +1174,12 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
       <p>Ravindra Kishor Shahi Sports Stadium</p>
     </div>
   </div>
-  <nav class="nav-links" id="navLinks">
+  <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
     <a href="#home">Home</a>
     <a href="#about">About</a>
+    <a href="#programs">Programs</a>
     <a href="#coach">Coach</a>
     <a href="#president">President</a>
-    <a href="#programs">Programs</a>
     <a href="gallery.html">Gallery</a>
     <a href="videos.html">Videos</a>
     <a href="#contact">Contact</a>
@@ -1186,13 +1191,13 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <video autoplay muted loop playsinline>
+  <video autoplay muted loop playsinline preload="metadata" poster="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1782554065/ashish_b_belt_zq9jmr.jpg" aria-hidden="true">
     <source src="https://res.cloudinary.com/dl4pvlmzt/video/upload/v1766046064/download_dxaewa.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
   <div class="hero-scan"></div>
   <div class="hero-content">
-    <div class="hero-badge">🥋 &nbsp; Modern Style Training &nbsp; · &nbsp; Est. Deoria, UP</div>
+    <div class="hero-badge">🥋 &nbsp; Taekwondo training in Deoria, Uttar Pradesh</div>
     <h1>TRAIN<br>LIKE A <span class="outline">CHAM</span><span class="red">PION</span></h1>
     <p class="hero-sub">Official Deoria Taekwondo Association — Modern style training, discipline, self-defense, fitness and championship preparation under Coach Girish Singh.</p>
     <div class="hero-btns">
@@ -1201,9 +1206,11 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     </div>
   </div>
   <div class="hero-stats">
-    <div class="hero-stat-pill"><div><h3>1000+</h3><p>Students Trained</p></div></div>
-    <div class="hero-stat-pill"><div><h3>500+</h3><p>Championship Medals</p></div></div>
-    <div class="hero-stat-pill"><div><h3>25+</h3><p>Years Experience</p></div></div>
+    <a class="hero-stat-pill hero-stat-link" href="videos.html?category=competition#videoGrid" aria-label="500 plus championship medals. View competition highlights">
+      <div><h3>500+</h3><p>Championship medals · View highlights ↗</p></div>
+    </a>
+    <div class="hero-stat-pill"><div><h3>Kyorugi</h3><p>Sparring &amp; competition skills</p></div></div>
+    <div class="hero-stat-pill"><div><h3>Poomsae</h3><p>Forms, balance &amp; technique</p></div></div>
   </div>
   <div class="hero-scroll">
     <span>Scroll</span>
@@ -1214,18 +1221,10 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 <!-- TICKER -->
 <div class="stats-ticker">
   <div class="ticker-track" id="ticker">
-    <span class="ticker-item">🥋 Modern Style Taekwondo <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">🏅 500+ Championship Medals <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">⚡ Kyorugi &amp; Poomsae <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">🌍 International Level Training <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">💪 1000+ Students Trained <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">🎯 District · State · National · International <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">🥋 Olympic Style Taekwondo <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">🏅 500+ Championship Medals <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">⚡ Kyorugi &amp; Poomsae <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">🌍 International Level Training <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">💪 1000 + Students Trained <span class="ticker-sep">·</span></span>
-    <span class="ticker-item">🎯 District · State · National · International <span class="ticker-sep">·</span></span>
+    <span class="ticker-item">🥋 Kyorugi sparring</span>
+    <span class="ticker-item">⚡ Poomsae forms</span>
+    <span class="ticker-item">💪 Fitness training</span>
+    <span class="ticker-item">🛡️ Self-defense</span>
   </div>
 </div>
 
@@ -1293,8 +1292,8 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 
         <!-- Prev / Next arrow buttons -->
         <div class="slide-arrows">
-          <div class="slide-arrow-btn" id="slidePrev"><i class="fas fa-chevron-left"></i></div>
-          <div class="slide-arrow-btn" id="slideNext"><i class="fas fa-chevron-right"></i></div>
+          <button type="button" class="slide-arrow-btn" id="slidePrev" aria-label="Previous photo"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+          <button type="button" class="slide-arrow-btn" id="slideNext" aria-label="Next photo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
         </div>
 
         <!-- Vertical progress dots -->
@@ -1303,8 +1302,8 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 
       <!-- Badge stays outside the slideshow box -->
       <div class="about-img-badge">
-        <h3>25+</h3>
-        <p>YEARS OF EXCELLENCE</p>
+        <h3>Train</h3>
+        <p>DISCIPLINE · SKILL · CONFIDENCE</p>
       </div>
     </div>
     <!-- ════ END SLIDESHOW ════ -->
@@ -1329,6 +1328,51 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   </div>
 </div>
 </section>
+
+<!-- PROGRAMS -->
+<section class="programs reveal" id="programs">
+<div class="container">
+  <div class="section-title">
+    <div class="section-label"><i class="fas fa-dumbbell"></i> What We Offer</div>
+    <h2>Training <span>Programs</span></h2>
+    <div class="red-line"></div>
+  </div>
+  <div class="program-grid">
+    <div class="program-card" data-program="kyorugi" role="button" tabindex="0" aria-label="Learn about Kyorugi sparring">
+      <div class="prog-icon"><i class="fas fa-fist-raised"></i></div>
+      <h3>Kyorugi Sparring</h3>
+      <p>Olympic style sparring with modern competition techniques, footwork, and counter-attack strategies.</p>
+      <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="program-card" data-program="poomsae" role="button" tabindex="0" aria-label="Learn about Poomsae forms">
+      <div class="prog-icon"><i class="fas fa-fire"></i></div>
+      <h3>Poomsae Forms</h3>
+      <p>Traditional forms for precision, balance and discipline — from Taeguek to Koryo and beyond.</p>
+      <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="program-card" data-program="selfdefense" role="button" tabindex="0" aria-label="Learn about self-defense training">
+      <div class="prog-icon"><i class="fas fa-shield-halved"></i></div>
+      <h3>Self Defense</h3>
+      <p>Practical self-defense techniques for real-world situations — build confidence and situational awareness.</p>
+      <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ═══ PROGRAM DETAIL MODAL ═══ -->
+<div class="prog-modal-overlay" id="progModalOverlay" aria-hidden="true" inert>
+  <div class="prog-modal" id="progModal" role="dialog" aria-modal="true" aria-labelledby="progModalTitle">
+    <button type="button" class="prog-modal-close" id="progModalClose" aria-label="Close program details"><i class="fas fa-times" aria-hidden="true"></i></button>
+    <div class="prog-icon" id="progModalIcon"><i class="fas fa-fist-raised"></i></div>
+    <span class="prog-modal-tag" id="progModalTag">Program</span>
+    <h3 id="progModalTitle">Kyorugi Sparring</h3>
+    <p class="prog-modal-desc" id="progModalDesc"></p>
+    <div class="prog-modal-list" id="progModalList"></div>
+    <a href="#contact" class="btn" id="progModalCta"><i class="fas fa-arrow-right"></i> Enquire About This Program</a>
+  </div>
+</div>
+
 
 <!-- COACH -->
 <section class="coach reveal" id="coach">
@@ -1377,7 +1421,6 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
         <div class="pi-role">ASSOCIATION PRESIDENT</div>
        <h3>Dr. Sanjay Kanodia</h3>
         <p class="pi-org">Deoria Taekwondo Association</p>
-        <p>The President represents Deoria Taekwondo Association and supports the academy’s training, discipline, and championship pathway at Ravindra Kishor Shahi Sports Stadium, Deoria.</p>
       </div>
     </div>
     <div class="coach-content reveal-right">
@@ -1423,77 +1466,33 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     View Full Gallery
     <i class="fas fa-arrow-right" style="font-size:13px;opacity:0.8;"></i>
   </a>
-  <span class="gallery-cta-tag">500+ Photos &amp; Videos · District · State · National</span>
+  <span class="gallery-cta-tag">Training · Events · Competition</span>
 </div>
 
 <!-- NEWS -->
 <section class="news reveal" id="news">
 <div class="container">
   <div class="section-title">
-    <div class="section-label"><i class="fas fa-newspaper"></i> Updates</div>
-    <h2>Latest <span>News</span></h2>
+    <div class="section-label"><i class="fas fa-users"></i> Association life</div>
+    <h2>Training &amp; <span>Community</span></h2>
     <div class="red-line"></div>
   </div>
   <div class="news-grid" id="newsGrid">
     <article class="news-card">
-      <h3>Training continues at Ravindra Kishor Shahi Sports Stadium, Deoria.</h3>
-      <span><i class="fas fa-location-dot"></i> Training update</span>
+      <h3>Build technique, fitness and confidence through consistent Taekwondo training.</h3>
+      <span><i class="fas fa-fist-raised"></i> Training</span>
     </article>
     <article class="news-card">
-      <h3>Athletes prepare for district, state and national championships under Coach Girish Singh.</h3>
-      <span><i class="fas fa-trophy"></i> Competition</span>
+      <h3>Prepare for district, state and national championships with Coach Girish Singh.</h3>
+      <span><i class="fas fa-trophy"></i> Competition prep</span>
     </article>
     <article class="news-card">
-      <h3>New students welcome — Kyorugi, Poomsae, fitness and self-defense batches are open.</h3>
-      <span><i class="fas fa-user-plus"></i> Join us</span>
+      <h3>New students are welcome to explore Kyorugi, Poomsae, fitness and self-defense.</h3>
+      <span><i class="fas fa-user-plus"></i> New students</span>
     </article>
   </div>
 </div>
 </section>
-
-<!-- PROGRAMS -->
-<section class="programs reveal" id="programs">
-<div class="container">
-  <div class="section-title">
-    <div class="section-label"><i class="fas fa-dumbbell"></i> What We Offer</div>
-    <h2>Training <span>Programs</span></h2>
-    <div class="red-line"></div>
-  </div>
-  <div class="program-grid">
-    <div class="program-card" data-program="kyorugi">
-      <div class="prog-icon"><i class="fas fa-fist-raised"></i></div>
-      <h3>Kyorugi Sparring</h3>
-      <p>Olympic style sparring with modern competition techniques, footwork, and counter-attack strategies.</p>
-      <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
-    </div>
-    <div class="program-card" data-program="poomsae">
-      <div class="prog-icon"><i class="fas fa-fire"></i></div>
-      <h3>Poomsae Forms</h3>
-      <p>Traditional forms for precision, balance and discipline — from Taeguek to Koryo and beyond.</p>
-      <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
-    </div>
-    <div class="program-card" data-program="selfdefense">
-      <div class="prog-icon"><i class="fas fa-shield-halved"></i></div>
-      <h3>Self Defense</h3>
-      <p>Practical self-defense techniques for real-world situations — build confidence and situational awareness.</p>
-      <div class="prog-arrow">Learn More <i class="fas fa-arrow-right"></i></div>
-    </div>
-  </div>
-</div>
-</section>
-
-<!-- ═══ PROGRAM DETAIL MODAL ═══ -->
-<div class="prog-modal-overlay" id="progModalOverlay">
-  <div class="prog-modal" id="progModal">
-    <div class="prog-modal-close" id="progModalClose"><i class="fas fa-times"></i></div>
-    <div class="prog-icon" id="progModalIcon"><i class="fas fa-fist-raised"></i></div>
-    <span class="prog-modal-tag" id="progModalTag">Program</span>
-    <h3 id="progModalTitle">Kyorugi Sparring</h3>
-    <p class="prog-modal-desc" id="progModalDesc"></p>
-    <div class="prog-modal-list" id="progModalList"></div>
-    <a href="#contact" class="btn" id="progModalCta"><i class="fas fa-arrow-right"></i> Enquire About This Program</a>
-  </div>
-</div>
 
 <!-- OLYMPIC JOURNEY -->
 <section class="olympic reveal">
@@ -1528,53 +1527,6 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 </div>
 </section>
 
-<!-- ═══ AFFILIATIONS ═══ -->
-<section class="affiliations reveal" id="affiliations">
-<div class="container">
-  <div class="section-title">
-    <div class="section-label"><i class="fas fa-landmark"></i> Recognized By</div>
-    <h2>Our <span>Affiliations</span></h2>
-    <div class="red-line"></div>
-    <p>Deoria Taekwondo Association trains under the technical standards set by the sport's governing bodies at state, national and world level.</p>
-  </div>
-  <div class="affil-grid">
-    <a href="https://www.uptaekwondo.com/" target="_blank" rel="noopener" class="affil-card">
-  <div class="affil-icon">
-    <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790488849/UP_tkd_logo_zyht3u.png"
-         alt="UP Taekwondo Association official logo"
-         width="110"
-         height="110">
-  </div>
-      <h4>UP Taekwondo Association</h4>
-      <p>State governing body developing and promoting Taekwondo across Uttar Pradesh.</p>
-      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
-    </a>
-   <a href="https://www.indiataekwondo.com/" target="_blank" rel="noopener" class="affil-card">
-  <div class="affil-icon">
-    <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790489123/india_tkd_logo_hm0cuo.png"
-         alt="India Taekwondo official logo"
-         width="110"
-         height="110">
-  </div>
-      <h4>India Taekwondo</h4>
-      <p>National governing body for Taekwondo in India, recognized by the Ministry of Youth Affairs &amp; Sports.</p>
-      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
-    </a>
-    <a href="https://www.worldtaekwondo.org/" target="_blank" rel="noopener" class="affil-card">
-  <div class="affil-icon">
-    <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790488370/world_tkd_logo_rjbwt2.png"
-         alt="World Taekwondo logo"
-         width="110"
-         height="110">
-  </div>
-      <h4>World Taekwondo</h4>
-      <p>The international federation governing Olympic Taekwondo worldwide.</p>
-      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square"></i></span>
-    </a>
-  </div>
-</div>
-</section>
-
 <!-- ═══ FIND US / MAP ═══ -->
 <section class="find-us reveal" id="find-us">
 <div class="container">
@@ -1597,6 +1549,44 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 </div>
 </section>
 
+<!-- ═══ TAEKWONDO WEBSITES ═══ -->
+<section class="affiliations reveal" id="taekwondo-websites">
+<div class="container">
+  <div class="section-title">
+    <div class="section-label"><i class="fas fa-globe" aria-hidden="true"></i> Useful Taekwondo Links</div>
+    <h2>Explore <span>Taekwondo Websites</span></h2>
+    <div class="red-line"></div>
+    <p>Visit the official websites of Taekwondo organizations at the state, national, and international levels.</p>
+  </div>
+  <div class="affil-grid">
+    <a href="https://www.uptaekwondo.com/" target="_blank" rel="noopener" class="affil-card">
+      <div class="affil-icon">
+        <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790488849/UP_tkd_logo_zyht3u.png" alt="UP Taekwondo Association logo" width="110" height="110">
+      </div>
+      <h4>UP Taekwondo Association</h4>
+      <p>Learn about Taekwondo in Uttar Pradesh.</p>
+      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+    </a>
+    <a href="https://www.indiataekwondo.com/" target="_blank" rel="noopener" class="affil-card">
+      <div class="affil-icon">
+        <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790489123/india_tkd_logo_hm0cuo.png" alt="India Taekwondo logo" width="110" height="110">
+      </div>
+      <h4>India Taekwondo</h4>
+      <p>Explore Taekwondo news and activities across India.</p>
+      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+    </a>
+    <a href="https://www.worldtaekwondo.org/" target="_blank" rel="noopener" class="affil-card">
+      <div class="affil-icon">
+        <img src="https://res.cloudinary.com/dl4pvlmzt/image/upload/v1790488370/world_tkd_logo_rjbwt2.png" alt="World Taekwondo logo" width="110" height="110">
+      </div>
+      <h4>World Taekwondo</h4>
+      <p>Discover the international federation for Olympic Taekwondo.</p>
+      <span class="affil-visit">Visit Website <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+    </a>
+  </div>
+</div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact reveal" id="contact">
 <div class="container">
@@ -1607,46 +1597,38 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   </div>
   <div class="contact-grid">
     <div class="contact-form">
-      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:10px;">GET IN TOUCH</h3>
-      <p style="color:var(--muted);margin-bottom:28px;">Feel free to reach out to us through any of the platforms below.</p>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;margin-bottom:10px;">CONNECT WITH US</h3>
+      <p style="color:var(--muted);margin-bottom:28px;">Choose a channel for enrollment questions and association updates.</p>
       <a href="https://wa.me/918318066739" class="social-card" target="_blank" rel="noopener">
-        <div class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></div>
-        <div class="social-info"><span>WHATSAPP</span><h4>+91 83180 66739</h4></div>
+        <div class="social-icon whatsapp"><i class="fab fa-whatsapp" aria-hidden="true"></i></div>
+        <div class="social-info"><span>WHATSAPP</span><h4>Message us</h4></div>
       </a>
       <a href="https://www.instagram.com/girishsingh129?igsh=ZTFkZmFocnViMnEz" class="social-card" target="_blank" rel="noopener">
-        <div class="social-icon instagram"><i class="fab fa-instagram"></i></div>
+        <div class="social-icon instagram"><i class="fab fa-instagram" aria-hidden="true"></i></div>
         <div class="social-info"><span>INSTAGRAM</span><h4>@girishsingh129</h4></div>
       </a>
       <a href="https://www.facebook.com/share/1Craowrqsz/" class="social-card" target="_blank" rel="noopener">
-        <div class="social-icon facebook"><i class="fab fa-facebook-f"></i></div>
+        <div class="social-icon facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></div>
         <div class="social-info"><span>FACEBOOK</span><h4>Deoria Taekwondo Association</h4></div>
-      </a>
-      <a href="tel:+918318066739" class="social-card">
-        <div class="social-icon phone"><i class="fas fa-phone"></i></div>
-        <div class="social-info"><span>CONTACT NUMBER</span><h4>+91 83180 66739</h4></div>
       </a>
     </div>
     <div class="contact-right">
       <div class="contact-info-head">
-        <h3>We'd Love to Hear From You</h3>
+        <h3>Contact details</h3>
         <div class="red-line"></div>
-        <p style="color:var(--muted);font-size:15px;">Reach out to join the association, ask questions about training, or learn about upcoming events.</p>
+        <p style="color:var(--muted);font-size:15px;">Ask about enrollment, age groups, current class times, and fees.</p>
       </div>
       <div class="contact-box">
-        <div class="cbox-icon"><i class="fas fa-location-dot"></i></div>
-        <div class="cbox-text"><h4>Address</h4><p>Ravindra Kishore Shahi Sports Stadium, Deoria, Uttar Pradesh</p></div>
-      </div>
-      <div class="contact-box">
-        <div class="cbox-icon"><i class="fas fa-phone"></i></div>
+        <div class="cbox-icon"><i class="fas fa-phone" aria-hidden="true"></i></div>
         <div class="cbox-text"><h4>Phone</h4><p><a href="tel:+918318066739" style="color:inherit;text-decoration:none;">+91 83180 66739</a></p></div>
       </div>
       <div class="contact-box">
-        <div class="cbox-icon"><i class="fas fa-envelope"></i></div>
+        <div class="cbox-icon"><i class="fas fa-envelope" aria-hidden="true"></i></div>
         <div class="cbox-text"><h4>Email</h4><p><a href="mailto:deoriataekwondo@gmail.com" style="color:inherit;text-decoration:none;">deoriataekwondo@gmail.com</a></p></div>
       </div>
       <div class="contact-box">
-        <div class="cbox-icon"><i class="fas fa-clock"></i></div>
-        <div class="cbox-text"><h4>Training Hours</h4><p>Mon – Sat · 6:00 AM – 8:00 PM</p></div>
+        <div class="cbox-icon"><i class="fas fa-clock" aria-hidden="true"></i></div>
+        <div class="cbox-text"><h4>Class schedule</h4><p>Contact us for current class times.</p></div>
       </div>
     </div>
   </div>
@@ -1659,7 +1641,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     <div class="footer-brand">
       <h2>🥋 Deoria Taekwondo</h2>
       <div class="red-line" style="margin-top:0;"></div>
-      <p>Official Association at Ravindra Kishore Shahi Sports Stadium, Deoria — building champions with discipline, strength, and heart.</p>
+      <p>Developing confident martial artists through disciplined training, fitness, and respect in Deoria.</p>
       <div class="footer-socials">
         <a class="footer-social" href="https://wa.me/918318066739" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
         <a class="footer-social" href="https://www.instagram.com/girishsingh129?igsh=ZTFkZmFocnViMnEz" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
@@ -1671,9 +1653,9 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
       <h4>Quick Links</h4>
       <a href="#home">Home</a>
       <a href="#about">About</a>
+      <a href="#programs">Programs</a>
       <a href="#coach">Our Coach</a>
       <a href="#president">President</a>
-      <a href="#programs">Programs</a>
       <a href="gallery.html">Gallery</a>
       <a href="videos.html">Videos</a>
       <a href="#contact">Contact</a>
@@ -1688,29 +1670,29 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Deoria Taekwondo Association — All Rights Reserved</p>
+    <p>© 2026 Deoria Taekwondo Association. All rights reserved.</p>
     <p style="color:var(--red);">🥋 Train · Compete · Champion</p>
   </div>
 </footer>
 
-<div class="img-lightbox" id="imgLightbox" aria-hidden="true">
+<div class="img-lightbox" id="imgLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true" tabindex="-1">
   <button type="button" class="img-lightbox-close" id="imgLightboxClose" aria-label="Close image">&times;</button>
   <img id="imgLightboxPhoto" alt="Enlarged gallery photo">
 </div>
 
-<div class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></div>
+<button class="scroll-top" id="scrollTop" type="button" aria-label="Back to top"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
 
-<div class="chat-fab" id="chatFab" role="button" tabindex="0" aria-label="Open Coach AI chat">
+<button class="chat-fab" id="chatFab" type="button" aria-label="Open Coach AI chat" aria-expanded="false" aria-controls="chatPanel">
   <span class="fab-icon">🥋</span>
   <div class="fab-notif">AI</div>
   <div class="fab-tip">Ask Coach AI 💬</div>
-  <div class="fab-nudge" id="fabNudge">
-    <div class="fn-close" id="fabNudgeClose"><i class="fas fa-times"></i></div>
+</button>
+<div class="fab-nudge" id="fabNudge">
+    <button type="button" class="fn-close" id="fabNudgeClose" aria-label="Dismiss Coach AI tip"><i class="fas fa-times" aria-hidden="true"></i></button>
     👋 Hey! I'm Coach AI — ask me anything about Taekwondo training here.
   </div>
-</div>
 
-<div class="chat-panel" id="chatPanel">
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Coach AI chat" aria-hidden="true" inert>
   <div class="cp-header">
     <div class="cp-avatar">🥋<div class="cp-online"></div></div>
     <div class="cp-info"><h4>COACH AI</h4><span>DEORIA TAEKWONDO</span></div>
@@ -1719,13 +1701,13 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
       <button type="button" class="cp-close" id="cpClose" aria-label="Close chat"><i class="fas fa-times"></i></button>
     </div>
   </div>
-  <div class="cp-messages" id="cpMessages"></div>
+  <div class="cp-messages" id="cpMessages" aria-live="polite" aria-relevant="additions text"></div>
   <div class="cp-footer">
     <div class="cp-input-row">
-      <textarea id="cbInput" placeholder="Ask your TKD coach..." rows="1" disabled></textarea>
-      <button class="cb-send" id="cbSend" disabled><i class="fas fa-paper-plane"></i></button>
+      <textarea id="cbInput" placeholder="Ask your TKD coach..." aria-label="Message Coach AI" maxlength="2000" rows="1" disabled></textarea>
+      <button class="cb-send" id="cbSend" type="button" aria-label="Send message" disabled><i class="fas fa-paper-plane" aria-hidden="true"></i></button>
     </div>
-    <p class="cp-hint">🥋 Sports & Taekwondo only · Powered by AI</p>
+    <p class="cp-hint">AI may be wrong. Messages go to an AI provider; don’t share personal details. Consult a clinician about injuries.</p>
   </div>
 </div>
 
@@ -1752,11 +1734,16 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   let   current   = 0;
   let   timer     = null;
   let   isAnimating = false;
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* Build vertical dots */
-  slides.forEach((_,i)=>{
-    const d = document.createElement('div');
+  slides.forEach((slide,i)=>{
+    slide.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
+    const d = document.createElement('button');
+    d.type = 'button';
     d.className = 'slide-dot-v' + (i===0?' active':'');
+    d.setAttribute('aria-label', 'Show photo ' + (i + 1) + ': ' + (slide.dataset.label || 'Taekwondo training'));
+    d.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
     const fill = document.createElement('div');
     fill.className = 'dot-fill';
     d.appendChild(fill);
@@ -1769,14 +1756,15 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   function updateDots(idx){
     dots.forEach((d,i)=>{
       d.classList.toggle('active', i===idx);
+      d.setAttribute('aria-pressed', i===idx ? 'true' : 'false');
       /* Reset fill then re-trigger */
       const fill = d.querySelector('.dot-fill');
       fill.style.transition = 'none';
       fill.style.height = '0%';
-      if(i===idx){
+      if(i===idx && !reduceMotion){
         requestAnimationFrame(()=>{
           requestAnimationFrame(()=>{
-            fill.style.transition = 'height 5.5s linear';
+            fill.style.transition = 'height 8s linear';
             fill.style.height = '100%';
           });
         });
@@ -1794,9 +1782,11 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
     /* exit old */
     slides[prev].classList.add('exit');
     slides[prev].classList.remove('active');
+    slides[prev].setAttribute('aria-hidden', 'true');
 
     /* enter new */
     slides[current].classList.add('active');
+    slides[current].setAttribute('aria-hidden', 'false');
 
     setTimeout(()=>{
       slides[prev].classList.remove('exit');
@@ -1815,7 +1805,7 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
 
   function resetTimer(){
     clearInterval(timer);
-    timer = setInterval(next, 5500);
+    if(!reduceMotion) timer = setInterval(next, 10000);
   }
 
   btnNext.addEventListener('click', next);
@@ -1832,6 +1822,10 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   /* Pause on hover */
   slideshow.addEventListener('mouseenter',()=> clearInterval(timer));
   slideshow.addEventListener('mouseleave',()=> resetTimer());
+  slideshow.addEventListener('focusin',()=> clearInterval(timer));
+  slideshow.addEventListener('focusout',event=>{
+    if(!slideshow.contains(event.relatedTarget)) resetTimer();
+  });
 
   /* Init */
   updateDots(0);
@@ -1891,29 +1885,55 @@ html,body{width:100%;max-width:100%;overflow-x:hidden;}
   const titleEl = document.getElementById('progModalTitle');
   const descEl  = document.getElementById('progModalDesc');
   const listEl  = document.getElementById('progModalList');
+  const cta     = document.getElementById('progModalCta');
+  let lastTrigger = null;
 
-  function openModal(key){
+  function openModal(key, trigger){
     const d = data[key];
     if(!d) return;
+    lastTrigger = trigger;
     iconEl.innerHTML = '<i class="fas '+d.icon+'"></i>';
     tagEl.textContent = d.tag;
     titleEl.textContent = d.title;
     descEl.textContent = d.desc;
     listEl.innerHTML = d.points.map(p=>'<div><i class="fas fa-check"></i><span>'+p+'</span></div>').join('');
     overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    overlay.inert = false;
     document.body.style.overflow = 'hidden';
+    closeBtn.focus();
   }
   function closeModal(){
+    if(!overlay.classList.contains('open')) return;
     overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.inert = true;
     document.body.style.overflow = '';
+    if(lastTrigger) lastTrigger.focus();
   }
 
   cards.forEach(card=>{
-    card.addEventListener('click', ()=> openModal(card.dataset.program));
+    card.addEventListener('click', ()=> openModal(card.dataset.program, card));
+    card.addEventListener('keydown', event=>{
+      if(event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      openModal(card.dataset.program, card);
+    });
   });
   closeBtn.addEventListener('click', closeModal);
+  cta.addEventListener('click', closeModal);
   overlay.addEventListener('click', e=>{ if(e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeModal(); });
+  document.addEventListener('keydown', e=>{
+    if(!overlay.classList.contains('open')) return;
+    if(e.key === 'Escape') closeModal();
+    if(e.key === 'Tab'){
+      const focusables = modal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])');
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  });
 })();
 
 /* ═══ AI ASSISTANT ONE-TIME NUDGE POPUP ═══ */
@@ -1963,6 +1983,9 @@ document.addEventListener("click", (e) => {
     ) {
         nav.classList.remove("active");
         btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-label', 'Open menu');
+        const icon = btn.querySelector('i');
+        if (icon) icon.className = 'fas fa-bars';
     }
 });
 </script>

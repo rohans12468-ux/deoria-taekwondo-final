@@ -503,8 +503,11 @@ html, body {
 
 }
 </style>
+<link rel="stylesheet" href="assets/css/site-polish.css">
 </head>
 <body>
+
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <!-- HEADER -->
 <header>
@@ -520,14 +523,14 @@ html, body {
 </header>
 
 <!-- HERO -->
-<section class="gallery-hero">
+<section class="gallery-hero" id="main-content">
     <h1>Poomsae <span>Event</span></h1>
-    <p>Photos from poomsae competitions, forms practice and related academy events.</p>
+    <p>Photos from poomsae competitions, forms practice and related association events.</p>
 </section>
 
 <!-- Gallery Category Buttons -->
 <div class="gallery-buttons">
-    <a href="gallery.html" class="gallery-btn">Academy Photos</a>
+    <a href="gallery.html" class="gallery-btn">Photos</a>
     <a href="poomsae.html" class="gallery-btn active">Poomsae Event</a>
     <a href="other.html" class="gallery-btn">Other Photos</a>
 </div>
@@ -539,24 +542,25 @@ html, body {
 </section>
 
 <!-- LIGHTBOX -->
-<div class="popup" id="popup">
-    <span class="close-btn" id="closeBtn">&times;</span>
-    <button class="nav-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+<div class="popup" id="popup" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true" tabindex="-1">
+    <button type="button" class="close-btn" id="closeBtn" aria-label="Close photo viewer">&times;</button>
+    <button type="button" class="viewer-fullscreen" id="fullscreenBtn" aria-label="Enter full screen" title="Enter full screen"><i class="fas fa-expand" aria-hidden="true"></i></button>
+    <button type="button" class="nav-btn prev" id="prevBtn" aria-label="Previous photo"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
     <div class="popup-inner">
         <img src="" id="popupImg" alt="Gallery Image">
     </div>
-    <button class="nav-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    <button type="button" class="nav-btn next" id="nextBtn" aria-label="Next photo"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
     <div class="img-counter" id="imgCounter">1 / 22</div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-    <p>Deoria Taekwondo Association © 2026</p>
+    <p>© 2026 Deoria Taekwondo Association. All rights reserved.</p>
 </footer>
 
 
 <!-- Scroll To Top Button -->
-<button id="scrollTopBtn" class="scroll-top-btn">
+<button id="scrollTopBtn" class="scroll-top-btn" type="button" aria-label="Back to top">
     <i class="fas fa-arrow-up"></i>
 </button>
 
